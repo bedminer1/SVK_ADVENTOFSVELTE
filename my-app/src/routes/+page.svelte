@@ -33,6 +33,7 @@
 
 <div>
 <h1>Naughty or Nice</h1>
+<p>The nicest kid was {nicestChild?.name} with a niceness score of {nicestChild?.tally} <br> The naughtiest kid was {naughtiestChild?.name} with a niceness score of {naughtiestChild?.tally} </p>
 {#if children}
 <table>
     {#each children as child, index}
