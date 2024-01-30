@@ -31,13 +31,13 @@
     })
 </script>
 
-<div>
-<h1>Naughty or Nice</h1>
+<div class="flex flex-col justify-top items-center w-screen">
+<h1 class="text-4xl py-11">Naughty or Nice</h1>
 <p>The nicest kid was {nicestChild?.name} with a niceness score of {nicestChild?.tally} <br> The naughtiest kid was {naughtiestChild?.name} with a niceness score of {naughtiestChild?.tally} </p>
 {#if children}
-<table>
+<table class="w-1/6">
     {#each children as child, index}
-    <tr>
+    <tr class="border-b-2">
         <td>
             {index + 1}
         </td>
