@@ -34,11 +34,9 @@
                 }
                 else {
                     naughtyChildren.push(children[i])
-                    naughtyChildren.reverse()
                 }
             }
-
-            console.log(niceChildren)
+            naughtyChildren.reverse()
         }
     }
     
