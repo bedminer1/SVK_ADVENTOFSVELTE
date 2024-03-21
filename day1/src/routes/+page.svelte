@@ -36,13 +36,14 @@
 	const naughtyTable = createSvelteTable(optionsNaughty)
 </script>
 
-<div class="flex gap-10">
+<div class="flex gap-20 justify-center mt-[20vh]">
 	<table>
+		<caption>Naughty List</caption>
 		<thead>
 			{#each $naughtyTable.getHeaderGroups() as headerGroup}
 			<tr>
 				{#each headerGroup.headers as header}
-					<th colSpan={header.colSpan}>
+					<th colSpan={header.colSpan} class="border-2 p-3">
 						{#if !header.isPlaceholder}
 							<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
 						{/if}
@@ -56,7 +57,7 @@
 			{#each $naughtyTable.getRowModel().rows as row}
 				<tr>
 					{#each row.getVisibleCells() as cell}
-						<td>
+						<td class="border-2 p-3">
 							<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
 						</td>
 					{/each}
@@ -65,11 +66,12 @@
 		</tbody>
 	</table>
 	<table>
+		<caption>Nice List</caption>
 		<thead>
 			{#each $niceTable.getHeaderGroups() as headerGroup}
 			<tr>
 				{#each headerGroup.headers as header}
-					<th colSpan={header.colSpan}>
+					<th colSpan={header.colSpan} class="border-2 p-3">
 						{#if !header.isPlaceholder}
 							<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
 						{/if}
@@ -83,7 +85,7 @@
 			{#each $niceTable.getRowModel().rows as row}
 				<tr>
 					{#each row.getVisibleCells() as cell}
-						<td>
+						<td class="border-2 p-3">
 							<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
 						</td>
 					{/each}
