@@ -31,13 +31,11 @@
     $: currSeconds = timeToSeconds(time)
 
     let completedTasks: Task[] = []
-    let snapshotTime: number
 
     setInterval(() => {
         completedTasks = []
-        snapshotTime = timeToSeconds(new Date().toLocaleTimeString())
         for (let task of tasks) {
-            if (timeToSeconds(task.date.slice(11, 19)) < snapshotTime) {
+            if (timeToSeconds(task.date.slice(11, 19)) < currSeconds) {
                 completedTasks.push(task)
             }
         }
@@ -66,9 +64,13 @@
 </script>
 
 <div class="flex justify-center flex-col items-center">
-    <h1>current time: {time}</h1>
-    <p>toys created: {toysCreated}</p>
-    <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
-    <p>presents wrapped: {presentsWrapped}</p>
-    <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
+    {#if toysCreated === 0} 
+        <p>...loading</p>
+    {:else}
+        <h1>current time: {time}</h1>
+        <p>toys created: {toysCreated}</p>
+        <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
+        <p>presents wrapped: {presentsWrapped}</p>
+        <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
+    {/if}
 </div>
