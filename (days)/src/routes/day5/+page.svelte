@@ -29,18 +29,46 @@
     }
 
     $: currSeconds = timeToSeconds(time)
-    const snapshotTime = timeToSeconds(new Date().toLocaleTimeString())
 
     let completedTasks: Task[] = []
-    for (let task of tasks) {
-        if (timeToSeconds(task.date.slice(11, 19)) < snapshotTime) {
-            completedTasks.push(task)
+    let snapshotTime: number
+
+    setInterval(() => {
+        completedTasks = []
+        snapshotTime = timeToSeconds(new Date().toLocaleTimeString())
+        for (let task of tasks) {
+            if (timeToSeconds(task.date.slice(11, 19)) < snapshotTime) {
+                completedTasks.push(task)
+            }
         }
-    }
+    }, 1000)
+
+
+   
+    let toysCreated: number = 0
+    let presentsWrapped: number = 0
+
+    setInterval(() => {
+        toysCreated = 0
+        presentsWrapped = 0
+        for (let task of completedTasks) {
+            if (task.task === 'CREATED_TOY') {
+                toysCreated++
+            } else {
+                presentsWrapped++
+            }
+        }
+    }, 1000)
+
+    $: toysCreatedRate = toysCreated / (currSeconds / 60 / 60)
+    $: presentsWrappedRate = presentsWrapped / (currSeconds / 60 / 60)
 
 </script>
 
-<div>
-    {time} {currSeconds}
-    
+<div class="flex justify-center flex-col items-center">
+    <h1>current time: {time}</h1>
+    <p>toys created: {toysCreated}</p>
+    <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
+    <p>presents wrapped: {presentsWrapped}</p>
+    <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
 </div>
