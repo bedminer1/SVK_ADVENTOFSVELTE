@@ -10,16 +10,27 @@
         date: string;
     }
 
-    let tasks: Task[]
+    export let data
+    const { tasks } = data
 
-    onMount(async () => {
-        setInterval(async () => {
-            const response = await fetch('https://advent.sveltesociety.dev/data/2023/day-five.json')
-            tasks = await response.json()
-        }, 1000)
-    })
+    let date = new Date()
+    setInterval(() => {
+        date = new Date()
+    }, 1000)
+    $: time = date.toLocaleTimeString()
+
+    function timeToSeconds(time: string): number {
+        const timeArr = time.split(':')
+        let output: number = 0
+        output += Number(timeArr[0]) * 60 * 60
+        output += Number(timeArr[1]) * 60
+        output += Number(timeArr[2])
+        return output
+    }
+
+    $: currSeconds = timeToSeconds(time)
 </script>
 
 <div>
-    {JSON.stringify(tasks)}
+    {time} {currSeconds}
 </div>
