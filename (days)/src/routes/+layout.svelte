@@ -7,7 +7,8 @@
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
-<nav>
+<nav class="px-4 py-2">
 	<a href="/">home</a>
 </nav>
+
 <slot />

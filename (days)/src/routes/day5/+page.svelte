@@ -29,8 +29,18 @@
     }
 
     $: currSeconds = timeToSeconds(time)
+    const snapshotTime = timeToSeconds(new Date().toLocaleTimeString())
+
+    let completedTasks: Task[] = []
+    for (let task of tasks) {
+        if (timeToSeconds(task.date.slice(11, 19)) < snapshotTime) {
+            completedTasks.push(task)
+        }
+    }
+
 </script>
 
 <div>
     {time} {currSeconds}
+    
 </div>
