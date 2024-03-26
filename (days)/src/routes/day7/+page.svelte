@@ -25,7 +25,7 @@
     ["X", "-..-"],
     ["Y", "-.--"],
     ["Z", "--.."],
-    [" ", "  "],
+    [" ", " "],
     ])
 
     let input: string = ''
@@ -56,7 +56,7 @@
         for (const char of input) {
     
             if (char === ' ') {
-                await new Promise(resolve => setTimeout(resolve, 500))
+                await new Promise(resolve => setTimeout(resolve, 200))
             }
 
             else if (char === '.') {
@@ -66,7 +66,7 @@
 
             else if (char === '-') {
                 longBeep()
-                await new Promise(resolve => setTimeout(resolve, 500))
+                await new Promise(resolve => setTimeout(resolve, 400))
             }
         }
     }
