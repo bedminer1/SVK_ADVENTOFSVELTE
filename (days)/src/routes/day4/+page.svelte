@@ -26,6 +26,7 @@
     ChartJS.defaults.color = 'rgb(255, 255, 255)'
 
     let data: number[] = []
+    $: reverse = [...data].reverse()
 
     $: myData = {
         labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
@@ -40,11 +41,16 @@
 
     onMount(async () => {
         setInterval(async() => {
-            const response = await fetch("https://advent.sveltesociety.dev/data/2023/day-four.json")
-            let temp: {heartRate: number} = await response.json()
-            data = [...data, temp.heartRate]
-            if (data.length > 10) {
-                data.shift()
+            try {
+                const response = await fetch("https://advent.sveltesociety.dev/data/2023/day-four.json")
+                let temp: {heartRate: number} = await response.json()
+                data = [...data, temp.heartRate]
+                if (data.length > 10) {
+                    data.shift()
+                }
+            } catch (err) {
+                console.log(err)
+                throw err
             }
         }, 1000)
 
@@ -52,6 +58,6 @@
 </script>
 
 <div>
-    {JSON.stringify(data)}
+    Last 10 readings: {JSON.stringify(reverse)}
     <Line data={myData} width={100} height={50} options={{ animation: false }}/>
 </div>
