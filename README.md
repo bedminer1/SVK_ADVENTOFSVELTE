@@ -1,6 +1,15 @@
-# SVKIT_NAUGHTYNICE
+# Advent of Svelte Challenge
 
-For Advent of Svelte Challenge #1 https://advent.sveltesociety.dev/#challenges
+Notes from each day
 
-What I learnt: 
-- Revision of how to fetch json from API using client-side rendering
+day 1:
+	- API fetching, parsing, and error handling
+	- how to use TanStack svelte for tables 
+	TODO: better table for lookup, filtering, highlighting; also a podium
+
+day 2:
+	- basic counter with increment, decrement and reset
+	TODO: add santa faces with different expressions, make counter naturally go down, add animation to make counter smoother
+
+day 3:
+	- 
