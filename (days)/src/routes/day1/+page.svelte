@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createSvelteTable, flexRender, getCoreRowModel, getSortedRowModel } from '@tanstack/svelte-table'
+	import { createSvelteTable, flexRender, getCoreRowModel, getPaginationRowModel } from '@tanstack/svelte-table'
 	import type { ColumnDef, TableOptions } from '@tanstack/svelte-table'
 	import { writable } from 'svelte/store'
 
@@ -9,6 +9,11 @@
 	const naughtyChildren: Child[] = [...data.children.filter((child: Child) => child.tally < 0)]
 
 	const defaultColumns: ColumnDef<Child>[] = [
+		{
+			accessorKey: 'index',
+			header: 'Ranking',
+			cell: (info) => info.getValue()
+		},
 		{
 			accessorKey: 'name',
 			header: 'Name',
@@ -25,20 +30,27 @@
 		data: [...data.children].reverse(),
 		columns: defaultColumns,
 		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		state: {
+			pagination: {
+				pageIndex: 0,
+				pageSize: 10,
+			},
+		},
 	})
 
 	const optionsNice = writable<TableOptions<Child>>({
 		data: niceChildren,
 		columns: defaultColumns,
 		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 	})
 
 	const optionsNaughty = writable<TableOptions<Child>>({
 		data: naughtyChildren,
 		columns: defaultColumns,
 		getCoreRowModel: getCoreRowModel(),
-		getSortedRowModel: getSortedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
 	})
 
 	const table = createSvelteTable(optionsDefault)
@@ -46,6 +58,21 @@
 	const naughtyTable = createSvelteTable(optionsNaughty)
 
 	let show = 'all'
+
+	function setCurrentPage(page: number) {
+		optionsDefault.update((old: any) => {
+			return {
+				...old,
+				state: {
+					...old.state,
+					pagination: {
+						...old.state?.pagination,
+						pageIndex: page
+					}
+				}
+			}
+		})
+	}
 </script>
 
 <div class="flex flex-col items-center gap-5">
@@ -54,14 +81,17 @@
 		<option value="naughty">Naughty List</option>
 		<option value="nice">Nice List</option>
 	</select>
+	<div>
+		<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex - 1)} disabled={!$table.getCanPreviousPage()}> &lt </button>
+		<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex + 1)} disabled={!$table.getCanNextPage()} class="btn"> &gt </button>
+	</div>
 	<div class="flex gap-0 justify-center w-full">
-	{#if show === "all"}
+		{#if show === "all"}
 		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
 			<thead>
 				{#each $table.getHeaderGroups() as headerGroup}
 	
 				<tr>
-					<th class="border-2">Placing</th>
 					{#each headerGroup.headers as header}
 						<th colSpan={header.colSpan} class="border-2 p-3">
 							{#if !header.isPlaceholder}
@@ -74,10 +104,8 @@
 			</thead>
 	
 			<tbody>
-				{#each $table.getRowModel().rows as row, index}
+				{#each $table.getRowModel().rows as row}
 					<tr class="hover:bg-primary-500">
-						<td class="border-2">{index + 1}</td>
-						
 						{#each row.getVisibleCells() as cell}
 							<td class="border-2 p-3 hover:bg-primary-500">
 								<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
@@ -94,9 +122,9 @@
 				{#each $naughtyTable.getHeaderGroups() as headerGroup}
 	
 				<tr>
-					<th class="border-2 border-r-0">Placing</th>
+					<th class="border-2">Placing</th>
 					{#each headerGroup.headers as header}
-						<th colSpan={header.colSpan} class="border-2 border-r-0 p-3">
+						<th colSpan={header.colSpan} class="border-2 p-3">
 							{#if !header.isPlaceholder}
 								<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
 							{/if}
@@ -109,10 +137,10 @@
 			<tbody>
 				{#each $naughtyTable.getRowModel().rows as row, index}
 					<tr>
-						<td class="border-2 border-r-0">{index + 1}</td>
+						<td class="border-2">{index + 1}</td>
 						
 						{#each row.getVisibleCells() as cell}
-							<td class="border-2 border-r-0 p-3 hover:bg-primary-500">
+							<td class="border-2 p-3 hover:bg-primary-500">
 								<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
 							</td>
 						{/each}
@@ -126,7 +154,7 @@
 		<thead>
 			{#each $niceTable.getHeaderGroups() as headerGroup}
 			<tr>
-				<th class="border-2 border-r-0">Placing</th>
+				<th class="border-2">Placing</th>
 				{#each headerGroup.headers as header}
 					<th colSpan={header.colSpan} class="border-2 p-3">
 						{#if !header.isPlaceholder}
@@ -141,7 +169,7 @@
 		<tbody>
 			{#each $niceTable.getRowModel().rows as row, index}
 				<tr>
-					<td class="border-2 border-r-0">{index + 1}</td>
+					<td class="border-2 w-32">{index + 1}</td>
 					{#each row.getVisibleCells() as cell}
 						<td class="border-2 p-3 hover:bg-primary-500">
 							<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
