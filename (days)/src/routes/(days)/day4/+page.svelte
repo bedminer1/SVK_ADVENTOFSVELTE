@@ -24,19 +24,23 @@
   );
 
     ChartJS.defaults.color = 'rgb(255, 255, 255)'
+    const labels: string[] = []
+    for (let i = 0; i < 50; i++) {
+        labels.push((i + 1).toString())
+    }
 
     let data: number[] = []
-    $: reverse = [...data].reverse()
+    $: reverse = [...data].reverse().slice(0, 10)
 
     $: myData = {
-        labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+        labels: labels,
         datasets: [{
             label: 'heart rate',
             data: data,
             borderWidth: 1,
             borderColor: 'rgb(255, 255, 255)',
             backgroundColor: 'rgb(255, 255, 255)'
-        }]
+        }],
     }
 
     onMount(async () => {
@@ -45,7 +49,7 @@
                 const response = await fetch("https://advent.sveltesociety.dev/data/2023/day-four.json")
                 let temp: {heartRate: number} = await response.json()
                 data = [...data, temp.heartRate]
-                if (data.length > 10) {
+                if (data.length > 50) {
                     data.shift()
                 }
             } catch (err) {
@@ -59,5 +63,13 @@
 
 <div>
     Last 10 readings: {JSON.stringify(reverse)}
-    <Line data={myData} width={100} height={50} options={{ animation: false }}/>
+    <Line data={myData} width={100} height={50} 
+    options={{ 
+        animation: false, 
+        scales: { 
+            y: { 
+                min: 55, max: 115
+            }
+        }
+    }}/>
 </div>

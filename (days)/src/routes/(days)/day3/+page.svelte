@@ -26,7 +26,7 @@
         {/each}
     </div>
     
-    <div class="w-1/2">
+    <div class="w-1/2 h-[50vh] overflow-scroll">
         <ListBox multiple>
         {#each data.children as child}
             <ListBoxItem bind:group={valueMultiple} name="options" value={[child.name, parseFloat(child.weight)]}>
