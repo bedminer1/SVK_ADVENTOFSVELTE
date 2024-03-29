@@ -11,10 +11,10 @@
     }
 
     function handleKeydown(key: string) {
-        if (key === 'd') {
+        if (key === ' ') {
            increment()
         }
-        else if (key === 'a') {
+        else if (key === 'q') {
             decrement()
         }
     }
@@ -29,7 +29,7 @@
 </script> 
 
 <div class="flex flex-col justify-center items-center text-xl">
-    <p>Press 'A' to take away cookies and 'D' to give cookies</p>
+    <p>Press <i>'Q'</i> to take away cookies and <i>Spacebar</i> to give cookies</p>
     <div>
         {count}
     </div>
