@@ -4,16 +4,31 @@
         count++
     }
     $: decrement = () => {
-        count--
+        if (count > 0) count--
     }
     $: reset = () => {
         count = 0
     }
+
+    function handleKeydown(key: string) {
+        if (key === 'd') {
+           increment()
+        }
+        else if (key === 'a') {
+            decrement()
+        }
+    }
 </script> 
 
-<div>
-    {count}
-    <button on:click={increment}>add</button>
-    <button on:click={decrement}>reduce</button>
+<div class="flex flex-col justify-center items-center">
+    <p>Press 'A' to take away cookies and 'D' to give cookies</p>
+    <div>
+        <button on:click={decrement}>-</button>
+        {count}
+        <button on:click={increment}>+</button>
+    </div>
     <button on:click={reset}>reset</button>
 </div>
+<svelte:window on:keypress={(event) => {
+    handleKeydown(event.key)
+}}/>
