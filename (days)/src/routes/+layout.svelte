@@ -12,10 +12,5 @@
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
 </script>
 
-<nav class="px-4 py-2 gap-2 flex">
-	{#each days as day}
-		<a href="/day{day}">{day}</a>
-	{/each}
-</nav>
 
 <slot />

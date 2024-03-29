@@ -18,14 +18,14 @@
 		{
 			accessorKey: 'name',
 			header: 'Name',
-			size: 80,
+			size: 96,
 			cell: (info) => info.getValue(),
 		},
 		{
 			accessorKey: 'tally',
 			header: 'Tally',
 			cell: (info) => info.getValue(),
-			size: 80,
+			size: 96,
 		}
 	]
 	
@@ -84,12 +84,15 @@
 		<option value="naughty">Naughty List</option>
 		<option value="nice">Nice List</option>
 	</select>
-	<div>
-		<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex - 1)} disabled={!$table.getCanPreviousPage()}> &lt </button>
-		<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex + 1)} disabled={!$table.getCanNextPage()} class="btn"> &gt </button>
-	</div>
 	<div class="flex gap-0 justify-center w-full">
 		{#if show === "all"}
+		<div class="flex gap-0 items-center flex-col w-full">
+			<div>
+				<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex - 1)} disabled={!$table.getCanPreviousPage()} class="btn"> &lt </button>
+				<span>{$table.getState().pagination.pageIndex + 1}</span>
+				<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex + 1)} disabled={!$table.getCanNextPage()} class="btn"> &gt </button>
+			</div>
+
 		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
 			<thead>
 				{#each $table.getHeaderGroups() as headerGroup}
@@ -110,7 +113,7 @@
 				{#each $table.getRowModel().rows as row}
 					<tr class="hover:bg-primary-500">
 						{#each row.getVisibleCells() as cell}
-							<td class="border-2 p-3 hover:bg-primary-500">
+							<td class="border-2 p-2 hover:bg-primary-500">
 								<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
 							</td>
 						{/each}
@@ -118,7 +121,7 @@
 				{/each}
 			</tbody>
 		</table>
-	
+	</div>
 	{:else if show === "naughty"}
 		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
 			<thead>
