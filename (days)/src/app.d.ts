@@ -12,3 +12,8 @@ interface Child {
     name: string
     tally: number
 }
+
+interface NamesList {
+	firstNames: string[]
+	lastNames: string[]
+}

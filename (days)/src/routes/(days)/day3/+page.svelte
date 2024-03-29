@@ -14,7 +14,7 @@
     </h1>
 {:else}
     <h1 class="text-center h1">
-        Sum: {sumWeight.toFixed(2)} 
+        Sum: {sumWeight.toFixed(2)}
     </h1>
 {/if}
 
@@ -22,7 +22,7 @@
     <div class="w-1/2 flex flex-col">
         <h2 class="h2">Selected Children</h2>
         {#each valueMultiple as selected}
-            <p>{selected[0]}</p>           
+            <p>{selected[0]}</p>       
         {/each}
     </div>
     
