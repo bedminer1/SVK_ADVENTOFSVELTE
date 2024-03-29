@@ -8,7 +8,6 @@ export const load = async ({ fetch }) => {
       ...children[index]
     }
   }
-  console.log(children)
 
   return {
     children

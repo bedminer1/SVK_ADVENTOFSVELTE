@@ -12,17 +12,20 @@
 		{
 			accessorKey: 'index',
 			header: 'Ranking',
-			cell: (info) => info.getValue()
+			size: 40,
+			cell: (info) => info.getValue(),
 		},
 		{
 			accessorKey: 'name',
 			header: 'Name',
-			cell: (info) => info.getValue()
+			size: 80,
+			cell: (info) => info.getValue(),
 		},
 		{
 			accessorKey: 'tally',
 			header: 'Tally',
-			cell: (info) => info.getValue()
+			cell: (info) => info.getValue(),
+			size: 80,
 		}
 	]
 	
@@ -93,7 +96,7 @@
 	
 				<tr>
 					{#each headerGroup.headers as header}
-						<th colSpan={header.colSpan} class="border-2 p-3">
+						<th colSpan={header.colSpan} class="border-2 p-3 w-{header.column.columnDef.size}">
 							{#if !header.isPlaceholder}
 								<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
 							{/if}
