@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createSvelteTable, flexRender, getCoreRowModel } from '@tanstack/svelte-table'
+	import { createSvelteTable, flexRender, getCoreRowModel, getSortedRowModel } from '@tanstack/svelte-table'
 	import type { ColumnDef, TableOptions } from '@tanstack/svelte-table'
 	import { writable } from 'svelte/store'
 
@@ -21,55 +21,112 @@
 		}
 	]
 	
+	const optionsDefault = writable<TableOptions<Child>>({
+		data: [...data.children].reverse(),
+		columns: defaultColumns,
+		getCoreRowModel: getCoreRowModel(),
+	})
+
 	const optionsNice = writable<TableOptions<Child>>({
 		data: niceChildren,
 		columns: defaultColumns,
-		getCoreRowModel: getCoreRowModel()
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 	})
 
 	const optionsNaughty = writable<TableOptions<Child>>({
 		data: naughtyChildren,
 		columns: defaultColumns,
-		getCoreRowModel: getCoreRowModel()
+		getCoreRowModel: getCoreRowModel(),
+		getSortedRowModel: getSortedRowModel(),
 	})
+
+	const table = createSvelteTable(optionsDefault)
 	const niceTable = createSvelteTable(optionsNice)
 	const naughtyTable = createSvelteTable(optionsNaughty)
+
+	let show = 'all'
 </script>
 
-<div class="flex gap-20 justify-center mt-[20vh]">
-	<table>
-		<caption>Naughty List</caption>
-		<thead>
-			{#each $naughtyTable.getHeaderGroups() as headerGroup}
-			<tr>
-				{#each headerGroup.headers as header}
-					<th colSpan={header.colSpan} class="border-2 p-3">
-						{#if !header.isPlaceholder}
-							<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
-						{/if}
-					</th>
-				{/each}
-			</tr>
-			{/each}
-		</thead>
-
-		<tbody>
-			{#each $naughtyTable.getRowModel().rows as row}
+<div class="flex flex-col items-center gap-5">
+	<select class="select w-1/2" bind:value={show}>
+		<option value="all">Show All</option>
+		<option value="naughty">Naughty List</option>
+		<option value="nice">Nice List</option>
+	</select>
+	<div class="flex gap-0 justify-center w-full">
+	{#if show === "all"}
+		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
+			<thead>
+				{#each $table.getHeaderGroups() as headerGroup}
+	
 				<tr>
-					{#each row.getVisibleCells() as cell}
-						<td class="border-2 p-3">
-							<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
-						</td>
+					<th class="border-2">Placing</th>
+					{#each headerGroup.headers as header}
+						<th colSpan={header.colSpan} class="border-2 p-3">
+							{#if !header.isPlaceholder}
+								<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
+							{/if}
+						</th>
 					{/each}
 				</tr>
-			{/each}
-		</tbody>
-	</table>
-	<table>
-		<caption>Nice List</caption>
+				{/each}
+			</thead>
+	
+			<tbody>
+				{#each $table.getRowModel().rows as row, index}
+					<tr class="hover:bg-primary-500">
+						<td class="border-2">{index + 1}</td>
+						
+						{#each row.getVisibleCells() as cell}
+							<td class="border-2 p-3 hover:bg-primary-500">
+								<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
+							</td>
+						{/each}
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	
+	{:else if show === "naughty"}
+		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
+			<thead>
+				{#each $naughtyTable.getHeaderGroups() as headerGroup}
+	
+				<tr>
+					<th class="border-2 border-r-0">Placing</th>
+					{#each headerGroup.headers as header}
+						<th colSpan={header.colSpan} class="border-2 border-r-0 p-3">
+							{#if !header.isPlaceholder}
+								<svelte:component this={flexRender(header.column.columnDef.header, header.getContext())} />
+							{/if}
+						</th>
+					{/each}
+				</tr>
+				{/each}
+			</thead>
+	
+			<tbody>
+				{#each $naughtyTable.getRowModel().rows as row, index}
+					<tr>
+						<td class="border-2 border-r-0">{index + 1}</td>
+						
+						{#each row.getVisibleCells() as cell}
+							<td class="border-2 border-r-0 p-3 hover:bg-primary-500">
+								<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
+							</td>
+						{/each}
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	
+	{:else if show === "nice"}
+	<table class="table w-2/3 ml-0 h-screen overflow-scroll">
 		<thead>
 			{#each $niceTable.getHeaderGroups() as headerGroup}
 			<tr>
+				<th class="border-2 border-r-0">Placing</th>
 				{#each headerGroup.headers as header}
 					<th colSpan={header.colSpan} class="border-2 p-3">
 						{#if !header.isPlaceholder}
@@ -80,12 +137,13 @@
 			</tr>
 			{/each}
 		</thead>
-
+	
 		<tbody>
-			{#each $niceTable.getRowModel().rows as row}
+			{#each $niceTable.getRowModel().rows as row, index}
 				<tr>
+					<td class="border-2 border-r-0">{index + 1}</td>
 					{#each row.getVisibleCells() as cell}
-						<td class="border-2 p-3">
+						<td class="border-2 p-3 hover:bg-primary-500">
 							<svelte:component this={flexRender(cell.column.columnDef.cell, cell.getContext())} />
 						</td>
 					{/each}
@@ -93,6 +151,6 @@
 			{/each}
 		</tbody>
 	</table>
+	{/if}
+	</div>	
 </div>
-
-
