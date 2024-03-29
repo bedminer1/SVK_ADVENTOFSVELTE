@@ -1,7 +1,7 @@
 <script lang="ts">
     let count = 0
     $: increment = () => {
-        count++
+        if (count < 100) count++
     }
     $: decrement = () => {
         if (count > 0) count--
@@ -18,16 +18,28 @@
             decrement()
         }
     }
+
+    $: cookieJar = getCookieJar(count)
+
+    function getCookieJar(count: number) {
+        let res = []
+        for (let i = 0; i < count; i++) res.push('🍪')
+        return res.join('')
+    }
 </script> 
 
-<div class="flex flex-col justify-center items-center">
+<div class="flex flex-col justify-center items-center text-xl">
     <p>Press 'A' to take away cookies and 'D' to give cookies</p>
     <div>
-        <button on:click={decrement}>-</button>
         {count}
-        <button on:click={increment}>+</button>
     </div>
-    <button on:click={reset}>reset</button>
+    <button on:click={reset}>Eat Cookies</button>
+    <h2>Cookie Jar:</h2>
+    <div class="w-56 border-2 border-t-0 mt-6">
+        <p>
+            {cookieJar}
+        </p>
+    </div>
 </div>
 <svelte:window on:keypress={(event) => {
     handleKeydown(event.key)
