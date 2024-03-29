@@ -25,10 +25,10 @@
     ["X", "-..-"],
     ["Y", "-.--"],
     ["Z", "--.."],
-    [" ", " "],
+    [" ", "/"],
     ])
 
-    let input: string = ''
+    let input: string = 'svelte'
     
     function encode(input: string): string {
         const str: string = input.toUpperCase()
@@ -55,7 +55,7 @@
     async function playSound(input: string) {
         for (const char of input) {
     
-            if (char === ' ') {
+            if (char === ' ' || char === '/') {
                 await new Promise(resolve => setTimeout(resolve, 200))
             }
 
@@ -72,11 +72,18 @@
     }
 </script>
 
+<div class="flex flex-col justify-center items-center gap-5">
+    <h1 class="h1">Morsify</h1>
 
-<p class="text-sm">
-    encoded: <pre>{encodedInput}</pre>
-
-<form class="w-1/2">
-    <input type="text" class="input w-1/2 rounded-sm" bind:value={input}>
-</form>
-<button on:click={() => playSound(encodedInput)}>Play Sound</button>
+        <form class="w-1/2 flex flex-col gap-3 items-center">
+            <i>Input text</i> 
+            <input type="text" class="input w-1/2 rounded-sm" bind:value={input}>
+        </form>
+        <button on:click={() => playSound(encodedInput)} class="btn ">Play Sound</button>
+        
+        <div class="bg-green-900 w-1/4 p-2">
+            <i>Output</i> 
+            <pre>{encodedInput}</pre>
+        </div>
+    
+</div>
