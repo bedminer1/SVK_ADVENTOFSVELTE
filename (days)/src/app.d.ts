@@ -17,3 +17,8 @@ interface NamesList {
 	firstNames: string[]
 	lastNames: string[]
 }
+
+interface Present {
+	name: string
+	weight: number
+}
