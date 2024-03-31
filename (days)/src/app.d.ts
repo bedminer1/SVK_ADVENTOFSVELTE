@@ -22,3 +22,8 @@ interface Present {
 	name: string
 	weight: number
 }
+
+interface PresentGroup {
+	presents: Present[]
+	weight: number
+}
