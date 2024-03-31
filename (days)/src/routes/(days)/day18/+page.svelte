@@ -23,6 +23,7 @@
         <div class="card w-full p-4 h-42">
             <p>{index + 1}. {question.question}</p>
             <select name="" id="" class="select w-1/2 mt-2" bind:value={answers[index]}>
+                <option value="" disabled selected>Select an Option</option>
                 {#each question.answers as answer}
                     <option value={answer.correct}>{answer.text}</option>
                 {/each}
