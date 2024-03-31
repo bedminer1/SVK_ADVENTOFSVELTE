@@ -13,6 +13,7 @@
             bag = [...bag, present]
             count += present.weight
         } else {
+            // bag is full, add clone of bag to bagbag and reset bag
             allBags = [...allBags, {presents: bag, weight: count}]
             bag = []
             count = 0

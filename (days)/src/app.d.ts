@@ -27,3 +27,11 @@ interface PresentGroup {
 	presents: Present[]
 	weight: number
 }
+
+interface Question {
+    question: string;
+    answers: {
+        text: string;
+        correct: boolean;
+    }[]
+}
