@@ -49,5 +49,31 @@
                 size: Math.random() * size
             })
         }
+
+        for (let i = 0; i < particles.length; i++) {
+            const p = particles[i]
+
+            // slight variation in speed from frame to frame
+            p.vx += uniform(-0.1, 0.1)
+            p.vy += uniform(-0.1, 0.1)
+
+            // updating position 
+            p.x += p.vx * delta / 1000
+            p.y += p.vy * delta / 1000
+
+            // if p out of bounds, remove it 
+            if (
+                p.y < -height ||
+                p.y > height + 10 ||
+                p.x < -width ||
+                p.x > width * 2
+            ) {
+                particles.splice(i--, 1)
+            }
+        }
+
+        particles = particles
+
+        frameHandle = requestAnimationFrame(loop)
     }
 </script>
