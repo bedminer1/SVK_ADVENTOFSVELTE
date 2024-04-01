@@ -25,7 +25,6 @@
 
 <div class="flex flex-col w-1/2 items-center justify-center gap-4">
     {#if !finished}
-    <button on:click={() => console.log(answers, correctAnswers)}>button</button>
     {#each data.quiz as question, index}
         <div class="card w-full p-4 h-42 max-w-96 h-40 flex flex-col justify-around">
             <p>{index + 1}. {question.question}</p>
