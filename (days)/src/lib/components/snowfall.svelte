@@ -1,6 +1,7 @@
 <script lang="ts">
     import { onMount } from "svelte";
     import { Canvas, T } from "@threlte/core";
+  import { CircleGeometry, Mesh, MeshBasicMaterial, OrthographicCamera } from "three";
 
     export let gravity: number
     export let gravityVariance: number
@@ -71,9 +72,27 @@
                 particles.splice(i--, 1)
             }
         }
-
+        // update state between frames
         particles = particles
 
         frameHandle = requestAnimationFrame(loop)
     }
 </script>
+
+<div
+
+>
+    <Canvas>
+        <T.OrthographicCamera 
+        
+        />
+
+        {#each particles as p (p)}
+            {@const { x, y, size } = p}
+            <T.Mesh >
+                <T.CircleGeometry />
+                <T.MeshBasicMaterial />
+            </T.Mesh>
+        {/each}
+    </Canvas>
+</div>
