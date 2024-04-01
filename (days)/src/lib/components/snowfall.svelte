@@ -80,17 +80,21 @@
 </script>
 
 <div
-
+    {...$$restProps}
+    bind:clientWidth={width}
+    bind:clientHeight={height}
 >
     <Canvas>
         <T.OrthographicCamera 
-        
+            makeDefault
+            args={[0, width, 0, height]}
+            position={[width / 2, -height / 2, 1]}
         />
 
         {#each particles as p (p)}
             {@const { x, y, size } = p}
-            <T.Mesh >
-                <T.CircleGeometry />
+            <T.Mesh position={[x, -y, 0]}>
+                <T.CircleGeometry args={[size, 32]}/>
                 <T.MeshBasicMaterial />
             </T.Mesh>
         {/each}
