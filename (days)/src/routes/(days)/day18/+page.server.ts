@@ -2,11 +2,15 @@ export const load = async ({ fetch }) => {
     const response = await fetch('https://advent.sveltesociety.dev/data/2023/day-eighteen.json')
     const quiz: Question[] = await response.json()
 
+    let correctAnswers: string [] = []
+
     for (let question of quiz) {
+        correctAnswers.push(question.answers[1].text)
         shuffleArray(question.answers)
     }
 
     return {
+        correctAnswers,
         quiz
     }
 }
