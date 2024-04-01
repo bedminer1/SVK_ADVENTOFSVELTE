@@ -9,11 +9,13 @@
     export let driftVariance: number
     export let rate: number
     export let size: number
+    export let fullScreen = true
 
     export let particles: Particle[] = []
 
+    let svg: SVGElement
     let width = 0
-    let height = 0
+    let height = 20
     let lastUpdate: number
     let frameHandle: number
 
@@ -35,16 +37,18 @@
         const delta = now - lastUpdate
         lastUpdate = now
 
+        let rect = svg.getBoundingClientRect();
+
         // count represents the number of snowflakes spawned per frame
         const count = rate * uniform(0, 2) * delta / 1000
         for (let i = 0; i < count; i++) {
             particles.push({
                 // width represents the horizontal window where snowflake can spawn
-                x: uniform(-width / 2, width * 1.5),
+                x: uniform(-rect.left, rect.right),
                 // spawn at the top
-                y: -10,
+                y: -1,
                 // horizontal speed, + for right, - for left
-                vx: uniform(-driftVariance, driftVariance) + drift,
+                vx: uniform(0, driftVariance) + drift,
                 // vertical speed
                 vy: uniform(-gravityVariance, gravityVariance) + gravity,
                 size: Math.random() * size
@@ -54,20 +58,15 @@
         for (let i = 0; i < particles.length; i++) {
             const p = particles[i]
 
-            // slight variation in speed from frame to frame
-            p.vx += uniform(-0.1, 0.1)
-            p.vy += uniform(-0.1, 0.1)
-
             // updating position 
             p.x += p.vx * delta / 1000
             p.y += p.vy * delta / 1000
 
             // if p out of bounds, remove it 
             if (
-                p.y < -height ||
-                p.y > height + 10 ||
-                p.x < -width ||
-                p.x > width * 2
+                p.y > rect.height + 1  ||
+                p.x < 0 ||
+                p.x > rect.width
             ) {
                 particles.splice(i--, 1)
             }
@@ -79,7 +78,27 @@
     }
 </script>
 
-<div
+<svg 
+    bind:this={svg}
+	class:fullScreen
+	class="absolute bg-opacity-0 pointer-events-none w-full h-full"
+>
+    {#each particles as p (p)}
+		<circle cx={p.x} cy={p.y} r={p.size} class="fill-white"></circle>
+	{/each}
+</svg>
+
+<style>
+	.fullScreen {
+		width: 100vw;
+		height: 100vh;
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+	}
+</style>
+<!-- <div
     {...$$restProps}
     bind:clientWidth={width}
     bind:clientHeight={height}
@@ -99,4 +118,4 @@
             </T.Mesh>
         {/each}
     </Canvas>
-</div>
+</div> -->
