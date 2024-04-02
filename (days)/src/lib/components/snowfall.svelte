@@ -1,7 +1,5 @@
 <script lang="ts">
     import { onMount } from "svelte";
-    import { Canvas, T } from "@threlte/core";
-  import { CircleGeometry, Mesh, MeshBasicMaterial, OrthographicCamera } from "three";
 
     export let gravity: number
     export let gravityVariance: number
@@ -14,8 +12,6 @@
     export let particles: Particle[] = []
 
     let svg: SVGElement
-    let width = 0
-    let height = 20
     let lastUpdate: number
     let frameHandle: number
 
@@ -98,24 +94,3 @@
 		top: 0;
 	}
 </style>
-<!-- <div
-    {...$$restProps}
-    bind:clientWidth={width}
-    bind:clientHeight={height}
->
-    <Canvas>
-        <T.OrthographicCamera 
-            makeDefault
-            args={[0, width, 0, height]}
-            position={[width / 2, -height / 2, 1]}
-        />
-
-        {#each particles as p (p)}
-            {@const { x, y, size } = p}
-            <T.Mesh position={[x, -y, 0]}>
-                <T.CircleGeometry args={[size, 32]}/>
-                <T.MeshBasicMaterial />
-            </T.Mesh>
-        {/each}
-    </Canvas>
-</div> -->
