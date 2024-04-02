@@ -43,3 +43,9 @@ interface Particle {
 	vy: number
 	size: number
 }
+
+interface AmazonPresent {
+	name: string
+	x: number
+	y: number
+}
