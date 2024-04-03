@@ -35,7 +35,9 @@
   "dependencies": {
     "@floating-ui/dom": "1.6.3",
     "@threlte/core": "^7.2.1",
+    "@threlte/extras": "^8.11.2",
     "chart.js": "^4.4.2",
+    "d3": "^7.9.0",
     "flowbite-svelte-icons": "^1.5.0",
     "svelte-chartjs": "^3.1.5",
     "three": "^0.163.0"

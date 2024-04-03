@@ -49,3 +49,10 @@ interface AmazonPresent {
 	x: number
 	y: number
 }
+
+interface Present3D {
+	name: string
+	x: number
+	y: number
+	z: number
+}
