@@ -11,6 +11,7 @@
 
     let scale: number
     $: if ($search != undefined && $search != '') {
+        // @ts-ignore
         if ($search.value === name) {
             scale = 0.1
             searchData.set({name: name, pos: pos})
@@ -20,11 +21,12 @@
     } else {
         scale = 0.1
     }
+    // @ts-ignore
     $: selected = $search != undefined && $search.value === name
 </script>
 
 <T.Mesh 
-    postion={[x,y,z]}
+    position={[x,y,z]}
     {scale}
 >
     {#if selected}
