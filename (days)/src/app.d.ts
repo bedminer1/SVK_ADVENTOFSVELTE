@@ -56,3 +56,8 @@ interface Present3D {
 	y: number
 	z: number
 }
+
+interface Expense {
+	gift: string
+	amount: number
+}
