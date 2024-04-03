@@ -72,7 +72,7 @@
     }
 </script>
 
-<div class="flex flex-col justify-center items-center gap-5">
+<div class="flex flex-col justify-center items-center gap-5 w-full">
     <h1 class="h1">Morsify</h1>
 
         <form class="w-1/2 flex flex-col gap-3 items-center">
@@ -81,9 +81,11 @@
         </form>
         <button on:click={() => playSound(encodedInput)} class="btn ">Play Sound</button>
         
+
         <div class="bg-green-900 w-1/4 p-2">
             <i>Output</i> 
-            <pre>{encodedInput}</pre>
+            <p class="whitespace-pre-wrap text-3xl">{encodedInput}</p>
         </div>
+
     
 </div>

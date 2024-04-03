@@ -5,8 +5,8 @@
     }
 </script>
 
-<div class="flex flex-col items-center justify-center gap-2 h-screen">
+<div class="grid grid-cols-3 items-center justify-center gap-2  overflow-auto mt-10">
     {#each days as day}
-    <a href="/day{day}">Day {day}</a>
+    <a href="/day{day}" class="text-center">Day {day}</a>
     {/each}
 </div>
