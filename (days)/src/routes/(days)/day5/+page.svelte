@@ -67,10 +67,13 @@
     {#if toysCreated === 0} 
         <p>...loading</p>
     {:else}
+    <h1 class="h1 mb-10">Santa's Workshop Tracker</h1>
+    <div class="card p-3 rounded-md">
         <h1>current time: {time}</h1>
         <p>toys created: {toysCreated}</p>
         <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
         <p>presents wrapped: {presentsWrapped}</p>
         <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
+    </div>
     {/if}
 </div>

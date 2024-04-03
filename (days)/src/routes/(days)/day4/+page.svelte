@@ -31,7 +31,9 @@
 
     let data: number[] = []
     $: reverse = [...data].reverse().slice(0, 10)
-
+    $: min = Math.min(...data) - 3
+    $: max = Math.max(...data) + 3
+    
     $: myData = {
         labels: labels,
         datasets: [{
@@ -61,14 +63,15 @@
     })
 </script>
 
-<div>
+<div class="w-2/3">
+    <h1 class="h1 text-center mb-10">Santa's Heart Monitor</h1>
     Last 10 readings: {JSON.stringify(reverse)}
     <Line data={myData} width={100} height={50} 
     options={{ 
         animation: false, 
         scales: { 
             y: { 
-                min: 55, max: 115
+                min: min, max: max
             }
         }
     }}/>

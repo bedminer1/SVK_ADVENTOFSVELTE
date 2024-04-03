@@ -16,7 +16,7 @@
 
 </script>
 
-<div>
-    <h1>Countdown to Christmas</h1>
-    <p>{day.toFixed()} days | {Math.floor(hour)} hours | {Math.floor(minute)} minutes | {Math.floor(seconds)} seconds</p>
+<div class="flex flex-col w-full h-[90vh] items-center justify-center">
+    <h1 class="h1 mb-10">Countdown to Christmas</h1>
+    <p class="text-center text-xl">{day.toFixed()} days | {Math.floor(hour)} hours | {Math.floor(minute)} minutes | {Math.floor(seconds)} seconds</p>
 </div>

@@ -12,20 +12,20 @@
 		{
 			accessorKey: 'index',
 			header: 'Ranking',
-			size: 40,
+			size: 20,
 			cell: (info) => info.getValue(),
 		},
 		{
 			accessorKey: 'name',
 			header: 'Name',
-			size: 96,
+			size: 50,
 			cell: (info) => info.getValue(),
 		},
 		{
 			accessorKey: 'tally',
-			header: 'Tally',
+			header: 'Score',
 			cell: (info) => info.getValue(),
-			size: 96,
+			size: 20,
 		}
 	]
 	
@@ -78,7 +78,8 @@
 	}
 </script>
 
-<div class="flex flex-col items-center gap-5">
+<div class="flex flex-col items-center gap-5 w-full">
+	<h1 class="h1">Naughty or Nice</h1>
 	<select class="select w-1/2" bind:value={show}>
 		<option value="all">Show All</option>
 		<option value="naughty">Naughty List</option>
@@ -93,7 +94,7 @@
 				<button on:click={() => setCurrentPage($table.getState().pagination.pageIndex + 1)} disabled={!$table.getCanNextPage()} class="btn"> &gt </button>
 			</div>
 
-		<table class="table w-2/3 mr-0 h-screen overflow-scroll">
+		<table class="table mr-0 w-1/3 h-screen overflow-scroll">
 			<thead>
 				{#each $table.getHeaderGroups() as headerGroup}
 	
