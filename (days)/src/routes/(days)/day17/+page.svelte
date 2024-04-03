@@ -6,14 +6,19 @@
 
     let currGift: string
     let currAmount: number
-    let gifts: Expense[] = []
     let overBudget = false
+    let form: HTMLFormElement
 
     function handleSubmit() {
-        if (sum > budget) {
+        if (sum + currAmount > budget) {
             overBudget = true
+            setTimeout(() => {
+                overBudget = false
+                form.reset()
+            }, 2000)
             return
         }
+        form.reset()
         giftStore.set([...$giftStore, ({
             gift: currGift,
             amount: currAmount,
@@ -28,10 +33,13 @@
 </script>
 
 <div>
-    <p>Your budget: ${budget}</p>
+    <p>Your budget:</p>
+    <input type="number" class="input mb-10 w-20 rounded-md" bind:value={budget}>
 
-    <form on:submit={() => handleSubmit()}>
+    <form on:submit={() => handleSubmit()} bind:this={form}>
+        <span>Gift:</span>
         <input type="text" bind:value={currGift} class="input">
+        <span>Amount:</span>
         <input type="number" bind:value={currAmount} class="input">
         <button>submit</button>
     </form>
