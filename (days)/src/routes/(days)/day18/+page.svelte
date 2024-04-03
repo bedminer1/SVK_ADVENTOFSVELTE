@@ -29,7 +29,7 @@
         {#each data.quiz as question, index}
             <div class="card w-full p-4 h-52 max-w-96 flex flex-col justify-around">
                 <p>{index + 1}. {question.question}</p>
-                <select name="" id="" class="select w-1/2 mt-2 rounded-lg" bind:value={answers[index]}>
+                <select name="" id="" class="select w-full mt-2 rounded-lg" bind:value={answers[index]}>
                     <option value="" disabled selected>Select an Option</option>
                     {#each question.answers as answer}
                         <option value={answer.text}>{answer.text}</option>
