@@ -6,9 +6,12 @@
 </script>
 
 <div class="w-2/3">
-    <h1 class="h1 text-center mb-10">
+    <h1 class="h1 text-center mb-2">
         Present Warehouse
     </h1>
+    <p class="w-full text-center">
+        <a href="/day16/v2" class="mb-5">check out v2?</a>
+    </p>
     <Accordion width="w-full">
         {#each data.grid as row, rowIndex}
         <AccordionItem>

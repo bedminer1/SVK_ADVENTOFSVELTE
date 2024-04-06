@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Canvas } from "@threlte/core";
-    import { search, searchData } from "$lib/stores";
-    import Scene from '$lib/components/Scene.svelte'
+    import { searchData } from "$lib/stores";
+    import Scene from '$lib/components/day16/Scene.svelte'
 
     export let presents3D: Present3D[]
     $: console.log($searchData)

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Canvas from "$lib/components/Canvas.svelte";
+    import Canvas from "$lib/components/day16/Canvas.svelte";
     import { search } from '$lib/stores'
     import Select from 'svelte-select'
     
