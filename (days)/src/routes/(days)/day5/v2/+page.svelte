@@ -22,6 +22,8 @@
         toysByHour[i] = new Set<Task>()
         presentsByHour[i] = new Set<Task>()
     }
+    const toysByHourData: number[] = []
+    const presetnsByHourData: number[] = []
 
     // rates of each task
     $: toysCreatedRate = toysCreated / (currSeconds / 60 / 60)
@@ -48,9 +50,11 @@
                 if (task.task === 'CREATED_TOY') {
                     toysCreated++
                     toysByHour[hour] = new Set([...toysByHour[hour], task])
+                    toysByHourData[hour] = toysByHour[hour].size
                 } else {
                     presentsWrapped++
                     presentsByHour[hour] = new Set([...presentsByHour[hour], task])
+                    presetnsByHourData[hour] = presentsByHour[hour].size
                 }
             }
         }
@@ -64,7 +68,6 @@
     <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
     <p>presents wrapped: {presentsWrapped}</p>
     <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
-    {#each toysByHour as toyHour, index}
-        <p>{index}: {toyHour.size}</p>
-    {/each}
+    <p>{toysByHourData}</p>
+    <p>{presetnsByHourData}</p>
 </div>
