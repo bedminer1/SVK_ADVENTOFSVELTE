@@ -61,3 +61,12 @@ interface Expense {
 	gift: string
 	amount: number
 }
+
+type TaskType = 'CREATED_TOY' | 'WRAPPED_PRESENT'
+
+interface Task {
+	elf: string
+	task: TaskType
+	minutesTaken: number
+	date: string;
+}

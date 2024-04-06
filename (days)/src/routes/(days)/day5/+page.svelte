@@ -1,15 +1,6 @@
 <script lang="ts">
     import { onMount } from "svelte"
 
-    type TaskType = 'CREATED_TOY' | 'WRAPPED_PRESENT'
-
-    interface Task {
-        elf: string
-        task: TaskType
-        minutesTaken: number
-        date: string;
-    }
-
     export let data
     const { tasks } = data
 
@@ -64,11 +55,11 @@
 </script>
 
 <div class="flex justify-center flex-col items-center">
-    {#if toysCreated === 0} 
+    {#if !tasks} 
         <p>...loading</p>
     {:else}
     <h1 class="h1 mb-10">Santa's Workshop Tracker</h1>
-    <div class="card p-3 rounded-md">
+    <div class="card p-3 rounded-md w-1/2">
         <h1>current time: {time}</h1>
         <p>toys created: {toysCreated}</p>
         <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
