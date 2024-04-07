@@ -143,8 +143,8 @@
         <h1 class="h3">Recent Tasks: </h1>
         <div class="flex flex-col gap-2 w-4/5">
             {#each completedTasks.slice(-5).reverse() as recentTask}
-            <div class="card p-3 w-full grid grid-cols-3 gap-4">
-                <p class="text-center">Task Type : {recentTask.task}</p>
+            <div class="card p-3 w-3/4 grid grid-cols-3">
+                <p class="text-center">{recentTask.task}</p>
                 <p class="text-center">Elf : {recentTask.elf}</p>
                 <p class="text-center">Time: {recentTask.date.slice(11, 16)}</p>
             </div>
