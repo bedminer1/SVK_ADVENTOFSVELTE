@@ -70,3 +70,13 @@ interface Task {
 	minutesTaken: number
 	date: string;
 }
+
+interface dataSet {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        borderWidth: number;
+        backgroundColor: string;
+    }[];
+}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { timeToSeconds } from '$lib/utils/timeConverter'
+    import BarChart from '$lib/components/BarChart.svelte'
 
     export let data
     const tasks: Task[] = data.tasks
@@ -24,6 +25,25 @@
     }
     const toysByHourData: number[] = []
     const presetnsByHourData: number[] = []
+
+    
+    let toyLabel: string[] = []
+    $: {
+        toyLabel = []
+        for (let i = 0; i < toysByHourData.length; i++) {
+            toyLabel.push((i + 1).toString())
+        }
+    }
+    // datasets for chartjs
+    $: toysData = {
+        labels: toyLabel,
+        datasets: [{
+            label: 'toys created at each hour',
+            data: toysByHourData,
+            borderWidth: 1,
+            backgroundColor: 'white'
+        }],
+    }
 
     // rates of each task
     $: toysCreatedRate = toysCreated / (currSeconds / 60 / 60)
@@ -62,12 +82,11 @@
     
 </script>
 
-<div>
+<div class="w-2/3 ">
     <p>time: {time}</p>
     <p>toys created: {toysCreated}</p>
     <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
+    <BarChart data={toysData} />
     <p>presents wrapped: {presentsWrapped}</p>
     <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
-    <p>{toysByHourData}</p>
-    <p>{presetnsByHourData}</p>
 </div>
