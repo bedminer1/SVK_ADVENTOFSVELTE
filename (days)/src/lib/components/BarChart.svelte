@@ -24,8 +24,26 @@
   
   <Bar 
   {data} 
-  width={1}
-  height={1}
+  width={5}
+  height={4}
   options={{
-        // animation: false 
+        plugins: {
+                legend: {
+                    labels: {
+                        color: '#DCC7EA'
+                    }
+                }
+        },
+        scales: {
+            y: {
+                ticks: {
+                    color: '#DCC7EA'
+                }
+            },
+            x: {
+                ticks: {
+                    color: '#DCC7EA'
+                }
+            }
+        },
         }}/>

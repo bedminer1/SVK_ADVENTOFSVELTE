@@ -53,7 +53,7 @@
             label: 'Toys Created',
             data: toysByHourData,
             borderWidth: 1,
-            backgroundColor: '#DCC7EA'
+            backgroundColor: '#DCC7EA',
         }],
     }
     $: toysLineData = {
