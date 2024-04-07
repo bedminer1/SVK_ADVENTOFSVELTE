@@ -80,3 +80,14 @@ interface dataSet {
         backgroundColor: string;
     }[];
 }
+
+interface LineDataSet {
+    labels: string[];
+    datasets: {
+        label: string;
+        data: number[];
+        borderWidth: number;
+		borderColor: string;
+        backgroundColor: string;
+    }[];
+}

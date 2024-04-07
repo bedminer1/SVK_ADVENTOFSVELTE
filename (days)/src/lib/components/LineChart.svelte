@@ -1,0 +1,34 @@
+<script lang="ts">
+    import { Line } from 'svelte-chartjs';
+    import {
+      Chart as ChartJS,
+      Title,
+      Tooltip,
+      Legend,
+      LineElement,
+      LinearScale,
+      PointElement,
+      CategoryScale,
+    } from 'chart.js';
+  
+    ChartJS.register(
+      Title,
+      Tooltip,
+      Legend,
+      LineElement,
+      LinearScale,
+      PointElement,
+      CategoryScale
+    );
+
+    export let data: LineDataSet
+  </script>
+  
+  <Line 
+    {data} 
+    width={1}
+    height={1}
+    options={{ 
+        responsive: true,
+        animation: false
+    }} />

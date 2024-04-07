@@ -22,6 +22,10 @@
     export let data: dataSet
   </script>
   
-  <Bar {data} options={{
+  <Bar 
+  {data} 
+  width={1}
+  height={1}
+  options={{
         // animation: false 
         }}/>
