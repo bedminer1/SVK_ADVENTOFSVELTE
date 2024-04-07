@@ -24,24 +24,36 @@
         presentsByHour[i] = new Set<Task>()
     }
     const toysByHourData: number[] = []
-    const presetnsByHourData: number[] = []
+    const presentsByHourData: number[] = []
 
     
     let toyLabel: string[] = []
+    let presentLabel: string[] = []
     $: {
         toyLabel = []
+        presentLabel = []
         for (let i = 0; i < toysByHourData.length; i++) {
-            toyLabel.push((i + 1).toString())
+            toyLabel.push((i).toString().padStart(2, '0') + ':00')
+            presentLabel.push((i).toString().padStart(2, '0') + ':00')
         }
     }
     // datasets for chartjs
     $: toysData = {
         labels: toyLabel,
         datasets: [{
-            label: 'toys created at each hour',
+            label: 'Toys Created',
             data: toysByHourData,
             borderWidth: 1,
-            backgroundColor: 'white'
+            backgroundColor: '#DCC7EA'
+        }],
+    }
+    $: presentsData = {
+        labels: presentLabel,
+        datasets: [{
+            label: 'Presents Wrapped',
+            data: presentsByHourData,
+            borderWidth: 1,
+            backgroundColor: '#DCC7EA'
         }],
     }
 
@@ -74,7 +86,7 @@
                 } else {
                     presentsWrapped++
                     presentsByHour[hour] = new Set([...presentsByHour[hour], task])
-                    presetnsByHourData[hour] = presentsByHour[hour].size
+                    presentsByHourData[hour] = presentsByHour[hour].size
                 }
             }
         }
@@ -84,9 +96,11 @@
 
 <div class="w-2/3 ">
     <p>time: {time}</p>
+    <p>5 Most Recent Task: {JSON.stringify(completedTasks.slice(-5).reverse())}</p>
     <p>toys created: {toysCreated}</p>
     <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
     <BarChart data={toysData} />
     <p>presents wrapped: {presentsWrapped}</p>
     <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
+    <BarChart data={presentsData} />
 </div>
