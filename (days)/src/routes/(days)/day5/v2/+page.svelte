@@ -11,6 +11,8 @@
 
     // sort tasks into done and not done
     let completedTasks: Task[] = []
+    // keep track of index of last completed task for caching
+    let lastIndex = 0
 
     // count total of each task
     let toysCreated: number = 0
@@ -26,20 +28,18 @@
     const toysByHourData: number[] = []
     const presentsByHourData: number[] = []
 
-    
-    let toyLabel: string[] = []
-    let presentLabel: string[] = []
+    // filling in labels with at each hour up to curr time
+    let timeLabel: string[] = []
     $: {
-        toyLabel = []
-        presentLabel = []
+        timeLabel = []
         for (let i = 0; i < toysByHourData.length; i++) {
-            toyLabel.push((i).toString().padStart(2, '0') + ':00')
-            presentLabel.push((i).toString().padStart(2, '0') + ':00')
+            timeLabel.push((i).toString().padStart(2, '0') + ' : 00')
         }
     }
+
     // datasets for chartjs
     $: toysData = {
-        labels: toyLabel,
+        labels: timeLabel,
         datasets: [{
             label: 'Toys Created',
             data: toysByHourData,
@@ -48,7 +48,7 @@
         }],
     }
     $: presentsData = {
-        labels: presentLabel,
+        labels: timeLabel,
         datasets: [{
             label: 'Presents Wrapped',
             data: presentsByHourData,
@@ -68,15 +68,13 @@
         time = new Date().toLocaleTimeString()
 
         // iterate through and all tasks done before 'now' is added
-        completedTasks = []
-        toysCreated = 0
-        presentsWrapped = 0
-
-        for (let task of tasks) {
+        for (let i = lastIndex + 1; i < tasks.length; i++) {
+            let task = tasks[i]
             if (timeToSeconds(task.date.slice(11, 19)) < currSeconds) {
-                completedTasks.push(task)
+                completedTasks = [...completedTasks, task]
+                lastIndex = i
                 
-                 // iterate through completed tasks,
+                // iterate through completed tasks,
                 //  find total of each task + at each hour
                 const hour = Number(task.date.slice(11, 13))
                 if (task.task === 'CREATED_TOY') {
@@ -88,7 +86,9 @@
                     presentsByHour[hour] = new Set([...presentsByHour[hour], task])
                     presentsByHourData[hour] = presentsByHour[hour].size
                 }
-            }
+            } 
+            // stops from doing unneeded iterations
+            else break
         }
     }, 1000)
     

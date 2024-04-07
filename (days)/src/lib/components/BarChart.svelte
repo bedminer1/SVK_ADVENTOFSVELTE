@@ -22,4 +22,6 @@
     export let data: dataSet
   </script>
   
-  <Bar {data} options={{ responsive: true, animation: false }}/>
+  <Bar {data} options={{
+        // animation: false 
+        }}/>
