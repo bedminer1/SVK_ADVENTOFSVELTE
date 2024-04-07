@@ -36,6 +36,16 @@
     // get a cumulative version
     let cumulativeToysData: number[] = []
     let cumulativePresentsData: number[] = []
+    let cumToys = 0
+    let cumPresents = 0
+    $: {
+        for (let i = 0; i <= Number(completedTasks.at(-1)?.date.slice(11, 13)); i++) {
+            cumToys += toysByHourData[i]
+            cumPresents += presentsByHourData[i]
+            cumulativeToysData[i] = cumToys
+            cumulativePresentsData[i] = cumPresents
+        }
+    }
 
     // filling in labels with at each hour up to curr time
     let timeLabel: string[] = []
@@ -114,16 +124,6 @@
             } 
             // stops from doing unneeded iterations
            else break
-        }
-
-        // check accumulator
-        let cumToys = 0
-        let cumPresents = 0
-        for (let i = 0; i <= Number(completedTasks.at(-1)?.date.slice(11, 13)); i++) {
-            cumToys += toysByHourData[i]
-            cumPresents += presentsByHourData[i]
-            cumulativeToysData[i] = cumToys
-            cumulativePresentsData[i] = cumPresents
         }
     }, 1000)
     

@@ -30,7 +30,6 @@
     height={4}
     options={{ 
         responsive: true,
-        animation: false,
         plugins: {
             legend: {
                 labels: {
