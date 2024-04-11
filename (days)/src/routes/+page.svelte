@@ -1,26 +1,10 @@
 <script lang="ts">
-    import Snowfall from "$lib/components/snowfall.svelte";
-
     let days: number[] = []
     for (let i = 1; i < 25; i++) {
         days.push(i)
     }
-
-    const defaults = {
-		gravity: 100,
-		gravityVariance: 10,
-		drift: 0,
-		driftVariance: 50,
-		rate: 10,
-		size: 2,
-	}
-
-    let settings = {...defaults}
 </script>
 
-<Snowfall 
-    {...settings}
-/>
 <div class="flex flex-col h-screen items-center justify-center">
     <h1 class="h1">Advent of Svelte</h1>
     <h3 class="h3 mt-2 mb-10">
