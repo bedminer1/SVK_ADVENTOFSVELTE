@@ -1,4 +1,18 @@
 <script lang="ts">
+    import Snowfall from "$lib/components/snowfall.svelte";
+
+
+
+    const defaults = {
+        gravity: 100,
+        gravityVariance: 10,
+        drift: 0,
+        driftVariance: 50,
+        rate: 2,
+        size: 2,
+    }
+
+    let settings = {...defaults}
     let days: number[] = []
     for (let i = 1; i < 25; i++) {
         days.push(i)
@@ -16,3 +30,7 @@
         {/each}
     </div>
 </div>
+
+<Snowfall 
+    {...settings}
+/>

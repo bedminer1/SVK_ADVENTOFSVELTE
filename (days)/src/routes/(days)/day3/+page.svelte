@@ -1,6 +1,7 @@
 <script lang="ts">
     import { Paginator, ProgressBar, Table, tableMapperValues } from '@skeletonlabs/skeleton'
     import type { TableSource, PaginationSettings } from '@skeletonlabs/skeleton'
+  import { select } from 'd3';
 
 // DATA FROM LOAD
     export let data
@@ -30,15 +31,24 @@
     }
 
     $: tableSimple = children ? setTableSource() : {head: [], body: []}
+    let isOver = false
 
 // UPDATE SELECTED OR NOT
     function handleSelect(e: any) {
         const isAdded: boolean = e.detail[2]
 
-        if (!isAdded) 
+        if (!isAdded) {
+            if (sumWeight > 100) {
+                isOver = true
+
+                setTimeout(() => isOver = false, 2000)
+                return
+            }
             selectedGroup.add(JSON.stringify(e.detail.slice(0, 2)))
+        }
         else 
             selectedGroup.delete(JSON.stringify(e.detail.slice(0, 2)))
+        selectedGroup = selectedGroup
 
         for (let i = 0; i < children.length; i++) {
             let child = children[i]
@@ -47,12 +57,12 @@
                 children = children
             }
         }
-
-        sumWeight = [...selectedGroup].reduce((accm, curr) => accm + Number(curr.split(',')[1].slice(-6, -2)), 0)
     }
 
     let selectedGroup = new Set<string>()
-    let sumWeight: number = 0
+    $: numberOfPresents = selectedGroup.size
+    $: sumWeight = [...selectedGroup].reduce((accm, curr) => accm + Number(curr.split(',')[1].slice(-6, -2)), 0)
+
     
 </script>
 
@@ -63,12 +73,16 @@
         <h1 class="text-center h3">
             Total Weight: {sumWeight.toFixed(2)} / 100
         </h1>
+        <h1 class="text-center h3">
+            Number of Presents: {numberOfPresents}
+        </h1>
         <ProgressBar 
             value={sumWeight} 
             max={100} 
-            height={"h-3"}
-            meter={'variant-filled-success'}
+            height={"h-5"}
+            meter={sumWeight > 100 ? 'bg-black' : 'bg-white'}
             />
+        
     </div>
 
     

@@ -10,6 +10,7 @@ export const load = async ({ fetch }) => {
         }
         children.push(child)
     }
+    children.sort((a, b) => b.weight - a.weight)
 
 
     return {
