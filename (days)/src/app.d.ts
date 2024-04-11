@@ -21,6 +21,7 @@ interface NamesList {
 interface Present {
 	name: string
 	weight: number
+	added: boolean
 }
 
 interface PresentGroup {
