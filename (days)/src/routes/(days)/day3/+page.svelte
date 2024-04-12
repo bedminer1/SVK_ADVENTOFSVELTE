@@ -1,7 +1,8 @@
 <script lang="ts">
+  import BarChart from '$lib/components/BarChart.svelte';
     import { Paginator, ProgressBar, Table, tableMapperValues } from '@skeletonlabs/skeleton'
     import type { TableSource, PaginationSettings } from '@skeletonlabs/skeleton'
-  import { select } from 'd3';
+    import { DataHandler } from '@vincjo/datatables'
 
 // DATA FROM LOAD
     export let data
@@ -32,60 +33,62 @@
 
     $: tableSimple = children ? setTableSource() : {head: [], body: []}
 
+// TABLE #2
+    const handler = new DataHandler(children, { rowsPerPage: 10 })
+    const rows = handler.getRows()
+
 // REMOVE ALL
     function removeAllSelected() {
-        for (const present of tableMapperValues(children, ['name', 'weight', 'added'])) {
-            if (present[2] === true) {
-                const event = {detail: present}
-                handleSelect(event)
+        for (const present of children) {
+            if (present.added === true) {
+                handleSelect(present)
             }
         }
     }
 
 // REMOVE ALL IN PAGE
     function removeAllInPage() {
-        for (const present of tableMapperValues(paginatedSource, ['name', 'weight', 'added'])) {
-            if (present[2] === true) {
-                const event = {detail: present}
-                handleSelect(event)
+        for (const present of paginatedSource) {
+            if (present.added === true) {
+                handleSelect(present)
             }
         }
     }
 
 // ADD ALL IN PAGE
     function addAllInPage() {
-        for (const present of tableMapperValues(paginatedSource, ['name', 'weight', 'added'])) {
-            if (present[2] === false) {
-                const event = {detail: present}
-                handleSelect(event)
+        for (const present of paginatedSource) {
+            if (present.added === false) {
+                handleSelect(present)
             }
         }
     }
 
 // UPDATE SELECTED OR NOT
-    function handleSelect(e: any) {
-        const isAdded: boolean = e.detail[2]
+    function handleSelect(present: Present) {
+        const isAdded: boolean = present.added
 
         if (!isAdded) {
             if (sumWeight > 100) {
                 return
                 }
-            selectedGroup.add(JSON.stringify(e.detail.slice(0, 2)))
+            selectedGroup.add(JSON.stringify([present.name, present.weight]))
         }
         
         else 
-            selectedGroup.delete(JSON.stringify(e.detail.slice(0, 2)))
+            selectedGroup.delete(JSON.stringify([present.name, present.weight]))
 
         selectedGroup = selectedGroup
 
         for (let i = 0; i < children.length; i++) {
             let child = children[i]
-            if (child.name === e.detail[0]) {
+            if (child.name === present.name) {
                 children[i].added = !isAdded
                 children = children
             }
         }
     }
+
 
     let selectedGroup = new Set<string>()
     $: numberOfPresents = selectedGroup.size
@@ -122,11 +125,24 @@
 
     
     <div class="w-1/2 flex flex-col gap-2">
-        <Table 
-            source={tableSimple} 
-            interactive={true} 
-            on:selected={handleSelect} 
-            />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Head</th>
+                    <th>Weight</th>
+                    <th>Selected</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#each paginatedSource as present}
+                    <tr on:click={() => handleSelect(present)}>
+                        <td>{present.name}</td>
+                        <td>{present.weight}</td>
+                        <td>{present.added}</td>
+                    </tr>
+                {/each}
+            </tbody>
+        </table>
 
         <Paginator 
             bind:settings={paginationSettings}
