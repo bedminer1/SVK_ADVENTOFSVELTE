@@ -33,6 +33,24 @@
     $: tableSimple = children ? setTableSource() : {head: [], body: []}
     let isOver = false
 
+    function removeAllSelected() {
+        for (const present of tableMapperValues(children, ['name', 'weight', 'added'])) {
+            if (present[2] === true) {
+                const event = {detail: present}
+                handleSelect(event)
+            }
+        }
+    }
+
+    function addAllInPage() {
+        for (const present of tableMapperValues(paginatedSource, ['name', 'weight', 'added'])) {
+            if (present[2] === false) {
+                const event = {detail: present}
+                handleSelect(event)
+            }
+        }
+    }
+
 // UPDATE SELECTED OR NOT
     function handleSelect(e: any) {
         const isAdded: boolean = e.detail[2]
@@ -43,11 +61,13 @@
 
                 setTimeout(() => isOver = false, 2000)
                 return
-            }
+                }
             selectedGroup.add(JSON.stringify(e.detail.slice(0, 2)))
         }
+        
         else 
             selectedGroup.delete(JSON.stringify(e.detail.slice(0, 2)))
+
         selectedGroup = selectedGroup
 
         for (let i = 0; i < children.length; i++) {
@@ -67,21 +87,27 @@
 </script>
 
 <div class="w-full flex flex-col items-center gap-10">
-    <h1 class="h1 my-10">Sleigh Load Balancer™</h1>
+   <h1 class="h1 my-10">Sleigh Load Balancer™</h1>
 
-    <div class="w-1/3 flex flex-col gap-2">
-        <h1 class="text-center h3">
-            Total Weight: {sumWeight.toFixed(2)} / 100
-        </h1>
-        <h1 class="text-center h3">
-            Number of Presents: {numberOfPresents}
-        </h1>
+    <div class="w-1/3 flex flex-col gap-4 items-center">
+        <div>
+            <h1 class="text-center h3">
+                Total Weight: {sumWeight.toFixed(2)} / 100
+            </h1>
+            <h1 class="text-center h3">
+                Number of Presents: {numberOfPresents}
+            </h1>
+        </div>
         <ProgressBar 
             value={sumWeight} 
             max={100} 
             height={"h-5"}
             meter={sumWeight > 100 ? 'bg-black' : 'bg-white'}
             />
+            <div class="w-full flex justify-center gap-3">
+                <button on:click={removeAllSelected} class="btn rounded-md variant-ghost-primary w-1/3">remove all</button>
+                <button on:click={addAllInPage} class="btn rounded-md variant-ghost-primary w-1/3">add whole page</button>
+            </div>
         
     </div>
 
