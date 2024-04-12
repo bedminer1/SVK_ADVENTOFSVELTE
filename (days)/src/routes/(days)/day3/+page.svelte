@@ -2,7 +2,6 @@
   import BarChart from '$lib/components/BarChart.svelte';
     import { Paginator, ProgressBar, Table, tableMapperValues } from '@skeletonlabs/skeleton'
     import type { TableSource, PaginationSettings } from '@skeletonlabs/skeleton'
-    import { DataHandler } from '@vincjo/datatables'
 
 // DATA FROM LOAD
     export let data
@@ -32,10 +31,6 @@
     }
 
     $: tableSimple = children ? setTableSource() : {head: [], body: []}
-
-// TABLE #2
-    const handler = new DataHandler(children, { rowsPerPage: 10 })
-    const rows = handler.getRows()
 
 // REMOVE ALL
     function removeAllSelected() {
@@ -113,7 +108,7 @@
             value={sumWeight} 
             max={100} 
             height={"h-5"}
-            meter={sumWeight > 100 ? 'bg-black' : 'bg-white'}
+            meter={sumWeight > 100 ? 'bg-[#DCC7EA]' : 'bg-white'}
             />
             <div class="w-full flex justify-center gap-3">
                 <button on:click={addAllInPage} class="btn rounded-md variant-ghost-primary w-1/3" disabled={(sumWeight > 100)}>add page</button>
@@ -135,7 +130,7 @@
             </thead>
             <tbody>
                 {#each paginatedSource as present}
-                    <tr on:click={() => handleSelect(present)} class:variant-ghost-secondary={present.added}>
+                    <tr on:click={() => handleSelect(present)} class:variant-soft-secondary={present.added}>
                         <td>{present.name}</td>
                         <td>{present.weight}</td>
                         <td>{present.added}</td>

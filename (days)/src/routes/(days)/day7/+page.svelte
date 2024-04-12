@@ -28,7 +28,7 @@
     [" ", "/"],
     ])
 
-    let input: string = 'svelte'
+    let input: string = ''
     
     function encode(input: string): string {
         const str: string = input.toUpperCase()
@@ -72,19 +72,19 @@
     }
 </script>
 
-<div class="flex flex-col justify-center items-center gap-5 w-full">
-    <h1 class="h1">Morsify</h1>
+<div class="flex flex-col justify-center items-center gap-2 w-full h-[90vh]">
+    <h1 class="h1 mb-10">Morsify</h1>
 
-        <form class="w-1/2 flex flex-col gap-3 items-center">
+        <form class="w-2/3 flex flex-col gap-3 items-center mb-3">
             <i>Input text</i> 
-            <input type="text" class="input w-1/2 rounded-sm" bind:value={input}>
+            <textarea class="textarea w-1/2 border-dashed border-2" placeholder="Enter Message to Rudolph" bind:value={input}></textarea>
         </form>
         <button on:click={() => playSound(encodedInput)} class="btn ">Play Sound</button>
         
 
-        <div class="bg-green-900 w-1/4 p-2">
+        <div class="bg-green-900 w-1/3 p-2 rounded-md border-dashed border-2 border-slate-800">
             <i>Output</i> 
-            <p class="whitespace-pre-wrap text-3xl">{encodedInput}</p>
+            <p class="whitespace-pre-wrap text-2xl">{encodedInput.length ? encodedInput : "/"}</p>
         </div>
 
     
