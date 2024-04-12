@@ -31,8 +31,8 @@
     }
 
     $: tableSimple = children ? setTableSource() : {head: [], body: []}
-    let isOver = false
 
+// REMOVE ALL
     function removeAllSelected() {
         for (const present of tableMapperValues(children, ['name', 'weight', 'added'])) {
             if (present[2] === true) {
@@ -42,6 +42,17 @@
         }
     }
 
+// REMOVE ALL IN PAGE
+    function removeAllInPage() {
+        for (const present of tableMapperValues(paginatedSource, ['name', 'weight', 'added'])) {
+            if (present[2] === true) {
+                const event = {detail: present}
+                handleSelect(event)
+            }
+        }
+    }
+
+// ADD ALL IN PAGE
     function addAllInPage() {
         for (const present of tableMapperValues(paginatedSource, ['name', 'weight', 'added'])) {
             if (present[2] === false) {
@@ -57,9 +68,6 @@
 
         if (!isAdded) {
             if (sumWeight > 100) {
-                isOver = true
-
-                setTimeout(() => isOver = false, 2000)
                 return
                 }
             selectedGroup.add(JSON.stringify(e.detail.slice(0, 2)))
@@ -105,8 +113,9 @@
             meter={sumWeight > 100 ? 'bg-black' : 'bg-white'}
             />
             <div class="w-full flex justify-center gap-3">
-                <button on:click={removeAllSelected} class="btn rounded-md variant-ghost-primary w-1/3">remove all</button>
-                <button on:click={addAllInPage} class="btn rounded-md variant-ghost-primary w-1/3">add whole page</button>
+                <button on:click={addAllInPage} class="btn rounded-md variant-ghost-primary w-1/3" disabled={(sumWeight > 100)}>add page</button>
+                <button on:click={removeAllInPage} class="btn rounded-md variant-ghost-primary w-1/3" disabled={sumWeight === 0}>remove page</button>
+                <button on:click={removeAllSelected} class="btn rounded-md variant-ghost-primary w-1/3" disabled={sumWeight === 0}>remove all</button>
             </div>
         
     </div>
