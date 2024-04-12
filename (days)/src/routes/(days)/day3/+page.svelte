@@ -135,7 +135,7 @@
             </thead>
             <tbody>
                 {#each paginatedSource as present}
-                    <tr on:click={() => handleSelect(present)}>
+                    <tr on:click={() => handleSelect(present)} class:variant-ghost-secondary={present.added}>
                         <td>{present.name}</td>
                         <td>{present.weight}</td>
                         <td>{present.added}</td>
