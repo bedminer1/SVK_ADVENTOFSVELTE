@@ -1,7 +1,4 @@
 <script lang="ts">
-    import { Accordion, AccordionItem, Paginator, Table } from '@skeletonlabs/skeleton';
-    import type { PaginationSettings } from '@skeletonlabs/skeleton';
-
     export let data
     
     let limit: number = 50
@@ -158,11 +155,11 @@
                 &#8594;
             </button>
         </div>
-        <p class="text-sm w-full text-center"><i>*use Q to decrement <br> and spacebar to increment</i></p>
+        <p class="text-sm w-full text-center"><i>*press Q for prev <br> and spacebar for next</i></p>
 
     </div>
 </div>
 
 <svelte:window on:keypress={(event) => {
     handleKeydown(event.key)
-}}/>
+}}/>     
