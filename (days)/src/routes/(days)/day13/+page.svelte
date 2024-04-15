@@ -4,7 +4,7 @@
 
     export let data
     
-    let limit: number = 100
+    let limit: number = 50
     let limitInput: number = limit
     let count = 0
     let allBags: PresentGroup[] = []
@@ -78,13 +78,13 @@
     <h1 class="h1 text-center mt-10 mb-2">Sleigh Load Balancer 2.0</h1>
     <p class="p mb-10">Automatically sorted for your convenience :-&#41</p>
 
-    <div class="mb-7 text-xl">
+    <div class="mb-7 text-xl flex flex-col gap-1">
         <p>Total Presents: 10000</p>
         <p>Number of Bags: {allBags.length}</p>
         <form on:submit={handleLimitChange}>
             <label class="label flex items-center">
                 <span>Weight Limit: </span>
-                <input type="numeric" bind:value={limitInput} class="bg-transparent border-dashed border-2 w-16 h-10 pl-3 rounded-lg mx-2 focus:outline-none focus:border-red-700">
+                <input type="numeric" bind:value={limitInput} class="bg-transparent border-dashed border-2 w-16 h-10 pl-3 rounded-lg mx-2 focus:outline-none focus:border-[#DCC7EA]">
                 <span>kg</span>
             </label>
         </form>
@@ -117,14 +117,34 @@
 
 
         <div class="flex gap-3 py-3 w-full justify-center">
-            <button on:click={setStartDisplayIndex}>&#8592</button>
-            <button on:click={decrementDisplayIndex}>&#8592</button>
+            <button 
+                class="btn w-8 variant-ghost-primary rounded-lg" 
+                on:click={setStartDisplayIndex} 
+                disabled={displayedIndex == 1}>
+                &#8592
+            </button>
+            <button 
+                class="btn w-8 variant-ghost-primary rounded-lg" 
+                on:click={decrementDisplayIndex} 
+                disabled={displayedIndex == 1}>
+                &#8592
+            </button>
             <form on:submit={handleManualPaginationUpdate} class="w-20">
                 <input type="text" bind:value={displayIndexInput} class="input pl-5">
             </form>
     
-            <button on:click={incrementDisplayIndex}>&#8594;</button>
-            <button on:click={setEndDisplayIndex}>&#8594;</button>
+            <button 
+                class="btn w-8 variant-ghost-primary rounded-lg" 
+                on:click={incrementDisplayIndex} 
+                disabled={displayedIndex == allBags.length}>
+                &#8594;
+            </button>
+            <button 
+                class="btn w-8 variant-ghost-primary rounded-lg" 
+                on:click={setEndDisplayIndex} 
+                disabled={displayedIndex == allBags.length}>
+                &#8594;
+            </button>
         </div>
     </div>
 </div>
