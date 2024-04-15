@@ -25,22 +25,32 @@
     
     // PAGINATION 
         let displayedIndex = 1
+        let displayIndexInput: number = displayedIndex
         $: displayedBag = allBags[displayedIndex - 1]
         
         const incrementDisplayIndex = () => {
             displayedIndex++
+            displayIndexInput = displayedIndex
             scrollToBottom()
         }
         const decrementDisplayIndex = () => {
             displayedIndex--
+            displayIndexInput = displayedIndex
             scrollToBottom()
         }
         const setStartDisplayIndex = () => {
             displayedIndex = 1
+            displayIndexInput = displayedIndex
             scrollToBottom()
         }
         const setEndDisplayIndex = () => {
             displayedIndex = allBags.length
+            displayIndexInput = displayedIndex
+            scrollToBottom()
+        }
+
+        function handleSubmit() {
+            displayedIndex = displayIndexInput
             scrollToBottom()
         }
 
@@ -83,7 +93,10 @@
         <div class="flex gap-3 py-3 w-full justify-center">
             <button on:click={setStartDisplayIndex}>&#8592</button>
             <button on:click={decrementDisplayIndex}>&#8592</button>
-            <p>{displayedIndex}</p>
+            <form on:submit={handleSubmit} class="w-20">
+                <input type="text" bind:value={displayIndexInput} class="input pl-5">
+            </form>
+    
             <button on:click={incrementDisplayIndex}>&#8594;</button>
             <button on:click={setEndDisplayIndex}>&#8594;</button>
         </div>
