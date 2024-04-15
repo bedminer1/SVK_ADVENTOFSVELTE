@@ -41,11 +41,13 @@
         $: displayedBag = allBags[displayedIndex - 1]
         
         const incrementDisplayIndex = () => {
+            if (displayedIndex === allBags.length) return
             displayedIndex++
             displayIndexInput = displayedIndex
             scrollToBottom()
         }
         const decrementDisplayIndex = () => {
+            if (displayedIndex === 1) return
             displayedIndex--
             displayIndexInput = displayedIndex
             scrollToBottom()
@@ -64,6 +66,16 @@
         function handleManualPaginationUpdate() {
             displayedIndex = displayIndexInput
             scrollToBottom()
+        }
+
+// NAV SHORTCUT
+        function handleKeydown(key: string) {
+            if (key === 'q') {
+                decrementDisplayIndex()
+            }
+            if (key === " ") {
+                incrementDisplayIndex()
+            }
         }
 
 // SCROLL
@@ -146,5 +158,11 @@
                 &#8594;
             </button>
         </div>
+        <p class="text-sm w-full text-center"><i>*use Q to decrement <br> and spacebar to increment</i></p>
+
     </div>
 </div>
+
+<svelte:window on:keypress={(event) => {
+    handleKeydown(event.key)
+}}/>
