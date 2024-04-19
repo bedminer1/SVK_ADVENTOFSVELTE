@@ -1,26 +1,12 @@
 <script lang="ts">
-    export let data
+  import { encode } from '$lib/utils/encode'
 
-    let inputName: string = ''
+  export let data
 
-    function hash(key: string): number {
-    let hashKey = 0;
-    const prime = 31;
-    for (let i = 0; i < key.length; i++) {
-      hashKey += key.charCodeAt(i) * prime;
-    }
-    return hashKey % 59;
-  }
+  let inputName: string = ''
 
-    function encode(inputName: string): string {
-        if (!inputName.includes(' ')) return '*please input valid name*'
-
-        const [firstName, lastName] = inputName.split(' ')
-        const newName: string[] = [data.names.firstNames[hash(firstName) * hash(lastName) % 59], data.names.lastNames[(hash(lastName) * hash(firstName)) % 59]]
-        return newName.join(' ')
-    }
-
-    $: elfName = encode(inputName)
+  // ENCODE takes in a name and returns a randomized elf name
+  $: elfName = encode(inputName, data.names)
     
 
 </script>
