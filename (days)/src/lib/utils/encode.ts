@@ -1,11 +1,11 @@
-export function encode(inputName: string, names: { firstNames: string[], lastNames: string[]}): string {
-    if (!inputName.includes(' ')) return '*please input valid name*'
+export function encode(inputName: string, names: { firstNames: string[], lastNames: string[]}): string[] {
+    if (!inputName.includes(' ')) return ['', '']
 
     const [firstName, lastName] = inputName.split(' ')
-    if (lastName.length < 1) return '*please input valid name*'
+    if (lastName.length < 1) return ['', '']
 
     const newName: string[] = [names.firstNames[hash(firstName) * hash(lastName) % 59], names.lastNames[(hash(lastName) * hash(firstName)) % 59]]
-    return newName.join(' ')
+    return newName
 }
 
 function hash(key: string): number {
