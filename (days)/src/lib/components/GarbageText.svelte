@@ -1,12 +1,10 @@
 <script lang="ts">
-  import { request } from 'http';
-  import { start } from 'repl';
     import { onMount } from 'svelte'
 
     export let originalText: string
     let scrambledText = ''
-    const transitionDuration = 700 // Number of frames
-    const framesPerUpdate = 2
+    const transitionDuration = 300 // Number of frames
+    const framesPerUpdate = 4
 
     onMount(() => {
         scrambleText()
@@ -72,5 +70,5 @@
 </script>
 
 <div class="inline-block">
-    {scrambleText}
+    {scrambledText}
 </div>

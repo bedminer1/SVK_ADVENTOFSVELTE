@@ -21,16 +21,23 @@
         <input type="text" class="input w-full rounded-md mb-4" placeholder="first and last name" bind:value={inputName}>
     </form>
     
-    <p class="text-lg">Elf Name: {firstName + ' ' + lastName}</p>
-    {#key firstName}
-					<div class="text-4xl md:text-5xl">
-						<span class="names text-primary">
-							<GarbageText originalText={firstName} />
-						</span>
-						<br />
-						<span class="names text-accent">
-							<GarbageText originalText={lastName} />
-						</span>
-					</div>
-				{/key}
+    <!-- <p class="text-lg">Elf Name: {firstName + ' ' + lastName}</p> -->
+    <div class="mt-5 text-2xl">
+      {#if firstName && lastName}
+        <p in:fly={{ x: -20, duration: 400 }} class="mb-3">Your <em>elf</em> name is:</p>
+        <div class="relative">
+          {#key firstName}
+            <div class="text-4xl md:text-5xl">
+              <span class="names text-primary">
+                <GarbageText originalText={firstName} />
+              </span>
+              <br />
+              <span class="names text-accent">
+                <GarbageText originalText={lastName} />
+              </span>
+            </div>
+          {/key}
+        </div>
+      {/if}
+    </div>
 </div>
