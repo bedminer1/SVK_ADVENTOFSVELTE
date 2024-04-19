@@ -59,14 +59,6 @@
 
         return output
     }
-
-    function interpolateCharacters(char1: string, char2: string, percentage: number): string {
-        const char1Code = char1.charCodeAt(0)
-        const char2Code = char2.charCodeAt(0)
-
-        const interpolatedCode = Math.round(char1Code + (char2Code - char1Code) * percentage)
-        return String.fromCharCode(interpolatedCode)
-    }
 </script>
 
 <div class="inline-block">
