@@ -58,6 +58,8 @@
         let output = percentageOriginal + percentageScrambled
 
         return output
+
+        
     }
 </script>
 

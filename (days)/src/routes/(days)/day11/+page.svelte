@@ -17,17 +17,19 @@
   <h1 class="h1 mb-8">
     Elf Name Generator
   </h1>
-    <form class="flex flex-col items-center">
+    <form class="flex flex-col items-center w-2/3">
+      <label class="label flex gap-3 items-center">
+        <span>Name: </span>
         <input type="text" class="input w-full rounded-md mb-4" placeholder="first and last name" bind:value={inputName}>
+      </label>
     </form>
     
-    <!-- <p class="text-lg">Elf Name: {firstName + ' ' + lastName}</p> -->
-    <div class="mt-5 text-2xl">
+    <div class="mt-3 text-xl w-2/3 p-4">
       {#if firstName && lastName}
         <p in:fly={{ x: -20, duration: 400 }} class="mb-3">Your <em>elf</em> name is:</p>
         <div class="relative">
           {#key firstName}
-            <div class="text-4xl md:text-5xl">
+            <div class="text-lg md:text-xl">
               <span class="names text-primary">
                 <GarbageText originalText={firstName} />
               </span>
