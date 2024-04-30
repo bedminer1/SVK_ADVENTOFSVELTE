@@ -18,10 +18,12 @@
                 let j = i
                 const innerStack: string[] = []
                 while (input[j] !== "(") {
-                    innerStack.push(stack.pop()!)
-                    j--
+                    const character = stack.pop()
+                    innerStack.push(character!)
+                    j -= character!.length
                 }
-    
+                
+
                 innerStack.pop() // eject extra open bracket
                 const res = resolve(innerStack)
                 stack.push(res.toString())
@@ -30,6 +32,7 @@
             
             if (numbers.includes(c) && !isNaN(Number(stack.at(-1)!))) {
                 stack.push((Number(stack.pop()) * 10 + Number(c)).toString())
+                console.log(stack)
                 continue
             }
             stack.push(c)
@@ -37,7 +40,6 @@
     }
     $: {
         finalResult = resolve(stack)
-        console.log(stack, finalResult, resolve(stack))
     } 
 
 
@@ -82,6 +84,7 @@
                 res -= Number(stack[i + 1])
             }
         }
+
         return res
     }
 </script>
