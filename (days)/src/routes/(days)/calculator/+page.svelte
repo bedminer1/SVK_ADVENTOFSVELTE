@@ -1,8 +1,8 @@
 <script lang="ts">
     import GarbageText from '$lib/components/GarbageText.svelte'
 
-
-    let input: string = "3+(4+2*2)*2"
+    const numbers = ['1','2','3','4','5','6','7','8','9','0']
+    let input: string = "3+(4*22)"
     
     // use a stack to parse the string
     let stack: string[]
@@ -27,32 +27,45 @@
                 stack.push(res.toString())
                 continue
             }
-        
+            
+            if (numbers.includes(c) && !isNaN(Number(stack.at(-1)!))) {
+                stack.push((Number(stack.pop()) * 10 + Number(c)).toString())
+                continue
+            }
             stack.push(c)
         }
-        finalResult = resolve(stack)
     }
+    $: {
+        finalResult = resolve(stack)
+        console.log(stack, finalResult, resolve(stack))
+    } 
+
+
 
     // resolve takes in a stack without brackets and resolves it
    function resolve(stack: string[]): number {
     // saving add(and subtract) in a stack, resolving multiply and divide first
-       const addStack: string[] = []
+       const addStack: string[] = [stack[0]]
 
-           for (let i = 0; i < stack.length; i++) {
+           for (let i = 1; i < stack.length; i++) {
                const c = stack[i]
-            //    if character is "*" or "/"
-               if (c === "*") {
+                //    if character is "*" or "/"
+                if (c === "*") {
                 // perform operation on numbers adjacent to operator, add result to addStack
-                   addStack.push((Number(addStack.pop()) * Number(stack[i + 1])).toString())
-                   i++ // number after operator 'used'
-                   continue
-               }
-               if (c === "/") {
-                   addStack.push((Number(addStack.pop()) / Number(stack[i + 1])).toString())
-                   i++
-                   continue
-               }
-               addStack.push(c)
+                    addStack.push((Number(addStack.pop()) * Number(stack[i + 1])).toString())
+                    i++ // number after operator 'used'
+                    continue
+                }
+                if (c === "/") {
+                    addStack.push((Number(addStack.pop()) / Number(stack[i + 1])).toString())
+                    i++
+                    continue
+                }
+                if (numbers.includes(c) && !isNaN(Number(addStack.at(-1)!))) {
+                    addStack.push((Number(stack.pop()) * 10 + Number(c)).toString())
+                    continue
+                }
+                addStack.push(c)
            }
 
        return resolveAddSubtract(addStack)
@@ -69,13 +82,8 @@
                 res -= Number(stack[i + 1])
             }
         }
-
         return res
     }
-
-    
-    
-// add/minus done in a one pass for loop
 </script>
 
 <div class="flex justify-center w-full h-[90vh] items-center">
@@ -84,7 +92,9 @@
         {#if isNaN(finalResult)}
             <h1 class="h2">Not a valid input :/ </h1>
         {:else}
+            {#key finalResult}
             <p class="h2"><GarbageText originalText={finalResult.toString()} /></p>
+            {/key}
         {/if}
     </div>
 </div>
