@@ -92,3 +92,9 @@ interface LineDataSet {
         backgroundColor: string;
     }[];
 }
+
+interface text {
+	body: string,
+	time: Date,
+	author: string,        
+}

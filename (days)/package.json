@@ -45,6 +45,8 @@
     "flowbite-svelte-icons": "^1.5.0",
     "svelte-chartjs": "^3.1.5",
     "svelte-select": "^5.8.3",
-    "three": "^0.163.0"
+    "sveltekit-superforms": "^2.12.6",
+    "three": "^0.163.0",
+    "zod": "^3.23.5"
   }
 }
