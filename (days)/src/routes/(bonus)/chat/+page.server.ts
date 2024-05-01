@@ -24,10 +24,13 @@ export const actions = {
         if (!form.valid) {
             return fail(400, {form})
         }
+        
         form.data.body = ""
-			return message(
-				form,
-				{ status: 201 }
-			)
+        return message(
+                form,
+                "Message Sent",
+                { status: 418 }
+            )
+        
     }
 }

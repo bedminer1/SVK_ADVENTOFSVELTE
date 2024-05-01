@@ -3,13 +3,13 @@
     
     export let data
 
-
     const { form, errors, message, capture, restore, enhance} = superForm(data.form, {
-        resetForm: true
+        resetForm: false
     })
     export const snapshot = { capture, restore }
     
     let texts: text[] = []
+    $form.time = new Date()
 
     function handleSubmit() {
         if ($form.body.length === 0 || $form.author.length === 0) return
@@ -51,7 +51,7 @@
         {/each}
     </div>
     {/if}
-    
+
     <form action="?/send" method="POST" class="flex flex-col w-2/5 gap-2" on:submit={handleSubmit} use:enhance>
         <input type="text" class="input variant-ghost-primary rounded-lg" name="author" bind:value={$form.author} placeholder="Enter User">
         {#if $errors.author}
@@ -61,6 +61,7 @@
         {#if $errors.body}
             <p><i>Please enter a message</i></p>
         {/if}
+        <input type="hidden" name="time" bind:value={$form.time}>
         <button></button>
     </form>
 </div>
