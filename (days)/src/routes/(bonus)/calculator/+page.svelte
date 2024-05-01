@@ -32,7 +32,6 @@
             
             if (numbers.includes(c) && !isNaN(Number(stack.at(-1)!))) {
                 stack.push((Number(stack.pop()) * 10 + Number(c)).toString())
-                console.log(stack)
                 continue
             }
             stack.push(c)
