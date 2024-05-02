@@ -6,6 +6,8 @@
 
     interactivity()
     const scale = spring(1)
+
+    export let intensity
 </script>
 
 <T.Mesh
@@ -13,22 +15,29 @@
     on:pointerenter={() => scale.set(1.1)}
     on:pointerleave={() => scale.set(1)}
 >
-    <T.SphereGeometry args={[1, 32, 16]} />
-    <T.MeshStandardMaterial color="white" />
+    <T.SphereGeometry args={[0.5, 32, 16]} />
+    <T.MeshStandardMaterial
+    transparent
+    emissive="white"
+    emissiveIntensity={intensity / 5}
+    opacity={0.7}
+    color="white" />
 </T.Mesh>
 
 <T.Mesh
     position.y={-2}
 >
   <T.BoxGeometry args={[4, 0.5, 1]} />
-  <T.MeshStandardMaterial color="hotpink" />
+  <T.MeshStandardMaterial
+    color="hotpink" />
 </T.Mesh>
 
-<T.AmbientLight intensity={0.1} />
-<T.RectAreaLight 
+<T.AmbientLight intensity="{0.1}" />
+<T.PointLight 
 light="0xffffff"
- intensity={1}
- position.z={2}
+position.x={0}
+position.y={0.4}
+ intensity={intensity}
  />
 
 <T.OrthographicCamera makeDefault zoom={100} position={[-3, 2, 5]}>
