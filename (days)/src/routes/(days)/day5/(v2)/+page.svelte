@@ -140,10 +140,10 @@
     </div>
 
     <div>
-        <h1 class="h3">Recent Tasks: </h1>
-        <div class="flex flex-col gap-2 w-4/5">
+        <h1 class="h3 mb-2">Recent Tasks: </h1>
+        <div class="flex flex-col gap-2 w-4/5 border-dashed border-2 rounded-lg p-5">
             {#each completedTasks.slice(-5).reverse() as recentTask}
-            <div class="card p-3 w-3/4 grid grid-cols-3">
+            <div class="card p-3 w-full grid grid-cols-3">
                 <p class="text-center">{recentTask.task}</p>
                 <p class="text-center">Elf : {recentTask.elf}</p>
                 <p class="text-center">Time: {recentTask.date.slice(11, 16)}</p>
@@ -154,22 +154,30 @@
     </div>
     
     <div>
-        <h1 class="h3">Toy Factory Stats</h1>
+        <h1 class="h3 mb-2">Toy Factory Stats</h1>
         <p>toys created: {toysCreated}</p>
         <p>toys created per hour: {toysCreatedRate.toFixed(2)}</p>
-        <div class="w-1/2 flex gap-10">
-            <LineChart data={toysLineData} />
-            <BarChart data={toysBarData} />
+        <div class="w-full flex gap-10 mt-3 border-dashed border-2 p-5 rounded-lg">
+            <div class="w-1/2">
+                <LineChart data={toysLineData} />
+            </div>
+            <div class="w-1/2">
+                <BarChart data={toysBarData} />
+            </div>       
         </div>
     </div>
     
     <div>
-        <h1 class="h3">Wrapping Factory Stats</h1>
+        <h1 class="h3 mb-2">Wrapping Factory Stats</h1>
         <p>presents wrapped: {presentsWrapped}</p>
         <p>presents wrapped per hour: {presentsWrappedRate.toFixed(2)}</p>
-        <div class="w-1/2 flex gap-10">
-            <LineChart data={presentsLineData} />
-            <BarChart data={presentsBarData} />
+        <div class="w-full flex gap-10 mt-3 border-dashed border-2 p-5 rounded-lg">
+            <div class="w-1/2">
+                <LineChart data={presentsLineData} />
+            </div>
+            <div class="w-1/2">
+                <BarChart data={presentsBarData} />
+            </div>       
         </div>
     </div>
     
