@@ -1,20 +1,12 @@
 <script lang="ts">
     import { T } from '@threlte/core'
-    import { interactivity } from '@threlte/extras'
-    import { spring } from 'svelte/motion'
     import { OrbitControls } from '@threlte/extras';
 
-    interactivity()
-    const scale = spring(1)
 
     export let intensity
 </script>
 
-<T.Mesh
-    scale={$scale}
-    on:pointerenter={() => scale.set(1.1)}
-    on:pointerleave={() => scale.set(1)}
->
+<T.Mesh>
     <T.SphereGeometry args={[0.5, 32, 16]} />
     <T.MeshStandardMaterial
     transparent
