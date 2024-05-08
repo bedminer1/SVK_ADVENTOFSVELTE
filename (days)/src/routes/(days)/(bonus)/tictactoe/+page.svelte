@@ -1,4 +1,7 @@
 <script lang="ts">
+    let playerOneTurn: boolean = true
+    let victoryMessage: string = ""
+
     const board: string[][] = []
     function setUpBoard() {
         for (let r = 0; r < 3; r++) {
@@ -7,12 +10,10 @@
                 board[r][c] = ""
             }
         }
+        victoryMessage = ""
     }
 
     setUpBoard()
-
-    let playerOneTurn: boolean = true
-    let victoryMessage: string = ""
 
     function handleClick(e: MouseEvent) {
         // @ts-ignore
