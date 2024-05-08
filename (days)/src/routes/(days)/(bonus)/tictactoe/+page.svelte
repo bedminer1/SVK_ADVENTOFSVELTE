@@ -25,20 +25,19 @@
 
         if (playerOneTurn) {
             board[Number(row)][Number(col)] = 'X'
-            playerOneTurn = false
         }
         else if (!playerOneTurn) {
             board[Number(row)][Number(col)] = 'O'
-            playerOneTurn = true
         }
 
-        const hasSomeoneWon = checkWin()
-        if (hasSomeoneWon === true) {
-            if (!playerOneTurn) // already swapped
+        if (checkWin() === true) {
+            if (playerOneTurn)
                 victoryMessage = "Player One Won"
             else 
                 victoryMessage = "Player Two Won"
         }
+
+        playerOneTurn = !playerOneTurn
     }
 
     function checkWin(): boolean {
