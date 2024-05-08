@@ -12,6 +12,7 @@
     setUpBoard()
 
     let playerOneTurn: boolean = true
+    let victoryMessage: string = ""
 
     function handleClick(e: MouseEvent) {
         // @ts-ignore
@@ -32,7 +33,10 @@
 
         const hasSomeoneWon = checkWin()
         if (hasSomeoneWon === true) {
-            console.log("victory", hasSomeoneWon)
+            if (playerOneTurn)
+                victoryMessage = "Player One Won"
+            else 
+                victoryMessage = "Player Two Won"
         }
     }
 
@@ -57,7 +61,10 @@
     }
 </script> 
 
-<div class="flex flex-col justify-center items-center w-full h-[90vh] gap-10">
+<div class="flex flex-col justify-center items-center w-full h-[80vh] gap-10">
+
+    <h1 class="h-10 h3">{victoryMessage}</h1>
+
     <div class="grid grid-cols-3 w-80 text-5xl">
     {#each board as r, row}
         {#each r as cell, col}
