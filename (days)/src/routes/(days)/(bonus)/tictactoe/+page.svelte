@@ -33,7 +33,7 @@
 
         const hasSomeoneWon = checkWin()
         if (hasSomeoneWon === true) {
-            if (playerOneTurn)
+            if (!playerOneTurn) // already swapped
                 victoryMessage = "Player One Won"
             else 
                 victoryMessage = "Player Two Won"
