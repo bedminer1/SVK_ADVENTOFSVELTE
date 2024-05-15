@@ -98,3 +98,20 @@ interface text {
 	time: Date,
 	author: string,        
 }
+
+interface ElfPost {
+	id: string 
+	author: string 
+	timestamp: string
+	content: string
+	likes: number 
+	comments: Comment[] 
+}
+
+interface Comment {
+	id: string
+	author: string 
+	timestamp: string 
+	content: string 
+	likes: number 
+}
