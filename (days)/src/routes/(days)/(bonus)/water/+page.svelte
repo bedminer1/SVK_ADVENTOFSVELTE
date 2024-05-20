@@ -27,10 +27,12 @@
 
     let paginationSettings = {
         page: 0,
-        limit: 10,
+        limit: 5,
         size: inputs.length,
         amounts: [3, 5, 10, 15]
     } satisfies PaginationSettings
+
+    $: paginationSettings.size = inputs.length
 
     $: paginatedSource = inputs.slice(
         paginationSettings.page * paginationSettings.limit,
@@ -39,8 +41,6 @@
 
     // TODO
     /*
-     - previous inputs tracker
-     - loading bar
      - adjustable target
      - streaks
     */
@@ -54,10 +54,10 @@
     </form>
 
     <ProgressBar 
-        value={total} 
-        max={2000} 
+        value={total < TARGET ? total : TARGET} 
+        max={TARGET} 
         height={"h-5"}
-        meter={total > 200 ? 'bg-[#DCC7EA]' : 'bg-white'}
+        meter={total > TARGET ? 'bg-[#DCC7EA]' : 'bg-white'}
         class="mb-5"
     />
 
@@ -67,29 +67,30 @@
     </div>
     <button class="text-xl btn variant-ghost-primary mb-10" on:click={() => total = 0}>Reset</button>
 
-    {#if total >= TARGET}
-        <p class="h3 text-center">TARGET HIT, NICE ONE!</p>
-    {/if}
-
     {#if inputs.length} 
-    <table class="table mb-3">
+    <table class="table mb-3 text-center">
         <thead>
             <tr>
-                <th>Time Stamp</th>
-                <th>Amount</th>
+                <th class="text-center">ID</th>
+                <th class="text-center">Amount</th>
+                <th class="text-center">Time Stamp</th>
             </tr>
         </thead>
         <tbody>
-            {#each paginatedSource as input}
+            {#each paginatedSource as input, i}
                 <tr>
-                    <td>{input.timestamp}</td>
+                    <td>{i + 1}</td>
                     <td>{input.amount}</td>
+                    <td>{input.timestamp}</td>
                 </tr>
             {/each}
         </tbody>
     </table>
 
-    <Paginator bind:settings={paginationSettings}/>
+    <Paginator 
+        bind:settings={paginationSettings}
+        class="w-full flex justify-between"
+    />
     {/if}
 </div>
 
