@@ -1,23 +1,23 @@
 <script lang="ts">
-    import { tick } from "svelte"
+  import type { Water } from "three/examples/jsm/Addons.js";
 
     let total = 0
     let waterToAdd: string
-    let ref: HTMLInputElement
     const TARGET = 2000
 
-    const focus = async () => {
-		await tick()
-		ref.focus()
-        console.log("hi")
-	}
+    let inputs: WaterInput[] = []
 
     async function handleSubmit() {
-        total += Number(waterToAdd)
+        const waterAmount = Number(waterToAdd)
+        const dateTime = new Date().toLocaleString()
+        const newInput: WaterInput = {
+            timestamp: dateTime,
+            amount: waterAmount,
+        }
+
+        inputs = [...inputs, newInput]
+        total += waterAmount
         waterToAdd = ""
-        
-       focus()
-        
     }
 
     // TODO
@@ -29,10 +29,10 @@
     */
 </script>
 
-<div class="flex flex-col h-[90vh] justify-center items-center">
+<div class="flex flex-col h-[90vh] items-center">
     <form on:submit={handleSubmit}>
         <span class="h3">Amount to be added (ml): </span>
-        <input type="text" class="input mt-2 rounded-lg" bind:value={waterToAdd} placeholder="eg. 500" bind:this={ref}> 
+        <input type="text" class="input mt-2 rounded-lg" bind:value={waterToAdd} placeholder="eg. 500"> 
         <button></button>
     </form>
 
@@ -46,6 +46,13 @@
     {#if total >= TARGET}
         <p class="h3 text-center">TARGET HIT, NICE ONE!</p>
     {/if}
+
+    <div>
+        {#each inputs as input}
+            <p>{input.timestamp}</p>
+            <p>{input.amount}ml</p>
+        {/each}
+    </div>
 </div>
 
 
