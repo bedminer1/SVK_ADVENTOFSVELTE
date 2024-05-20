@@ -115,3 +115,8 @@ interface Comment {
 	content: string 
 	likes: number 
 }
+
+interface WaterInput {
+	timestamp: string
+	amount: number
+}
