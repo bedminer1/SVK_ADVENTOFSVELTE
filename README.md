@@ -5,6 +5,8 @@ One of the most fun and productive challenges I've undertaken in dev(maybe even 
 
 Another piece of advice for newcomers is to look around for inspiration after your first attempt and to go back to work on a v2. That helped me learn a lot of cool new tricks.
 
+On top of base challenges, added random challenges I received from friends in the (bonus) file
+
 # Tech I Learnt
 - Threlte: 3D modelling and rendering
 - Chartjs: when you need charts
