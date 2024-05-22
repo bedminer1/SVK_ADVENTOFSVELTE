@@ -4,7 +4,7 @@
 
     let total = 0
     let waterToAdd: string
-    const TARGET = 2000
+    let target = 2000
 
     let inputs: WaterInput[] = []
 
@@ -25,6 +25,7 @@
         waterToAdd = ""
     }
 
+    // <PAGINATION
     let paginationSettings = {
         page: 0,
         limit: 5,
@@ -38,6 +39,7 @@
         paginationSettings.page * paginationSettings.limit,
         paginationSettings.page * paginationSettings.limit + paginationSettings.limit
     );
+    // PAGINATION>
 
     // TODO
     /*
@@ -54,16 +56,18 @@
     </form>
 
     <ProgressBar 
-        value={total < TARGET ? total : TARGET} 
-        max={TARGET} 
+        value={total < target ? total : target} 
+        max={target} 
         height={"h-5"}
-        meter={total > TARGET ? 'bg-[#DCC7EA]' : 'bg-white'}
+        meter={total > target ? 'bg-[#DCC7EA]' : 'bg-white'}
         class="mb-5"
     />
 
     <div class="w-full border-dashed border-2 rounded-lg flex flex-col p-3 mb-5">
+        
+        <p class="h3 mb-2 flex">Target Amount: <input type="text" bind:value={target} class="input w-20 rounded-lg mx-2 border-dashed border-2"> ml</p>
+        <p class="h3 mb-2">Amount to Target: {target - total > 0 ? target - total : 0} ml</p>
         <p class="h3 mb-4">Total Amount Drank: {total} ml</p>
-        <p class="h3 mb-2">Amount to Target: {TARGET - total > 0 ? TARGET - total : 0} ml</p>
     </div>
     <button class="text-xl btn variant-ghost-primary mb-10" on:click={() => total = 0}>Reset</button>
 
