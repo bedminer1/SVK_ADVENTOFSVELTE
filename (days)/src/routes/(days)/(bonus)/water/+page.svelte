@@ -6,6 +6,7 @@
     let waterToAdd: string
     let target = 2000
 
+
     let inputs: WaterInput[] = []
 
     async function handleSubmit() {
@@ -14,7 +15,7 @@
             waterToAdd = ""
             return
         }
-        const dateTime = new Date().toLocaleString()
+        const dateTime = new Date()
         const newInput: WaterInput = {
             timestamp: dateTime,
             amount: waterAmount,
@@ -40,6 +41,18 @@
         paginationSettings.page * paginationSettings.limit + paginationSettings.limit
     );
     // PAGINATION>
+
+    let streakMap = new Map<number, number>()
+    let streak = 0
+    const dayOfYear = (date: Date)=>
+    //@ts-ignore
+        Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24))
+    $: for (const input of inputs) {
+        // parse timestamp into day index
+        const day = dayOfYear(input.timestamp)
+        streakMap.set(day, 0)
+    }
+    $: console.log(streakMap)
 
     // TODO
     /*
@@ -85,7 +98,7 @@
                 <tr>
                     <td>{i + 1}</td>
                     <td>{input.amount}</td>
-                    <td>{input.timestamp}</td>
+                    <td>{input.timestamp.toLocaleString()}</td>
                 </tr>
             {/each}
         </tbody>

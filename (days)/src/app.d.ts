@@ -117,6 +117,6 @@ interface Comment {
 }
 
 interface WaterInput {
-	timestamp: string
+	timestamp: Date
 	amount: number
 }
