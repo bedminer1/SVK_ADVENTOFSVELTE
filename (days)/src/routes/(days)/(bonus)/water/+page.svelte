@@ -9,12 +9,18 @@
 
     let inputs: WaterInput[] = []
     const dummyDate = new Date()
+    const dummyDate2 = new Date()
     dummyDate.setDate(dummyDate.getDate() - 1)
+    dummyDate2.setDate(dummyDate2.getDate() - 2)
     const dummyInput: WaterInput = {
         amount: 500,
         timestamp: dummyDate
     }
-    inputs = [dummyInput]
+    const dummyInput2: WaterInput = {
+        amount: 1500,
+        timestamp: dummyDate2
+    }
+    inputs = [dummyInput2, dummyInput]
 
     async function handleSubmit() {
         const waterAmount = Number(waterToAdd)
@@ -91,7 +97,7 @@
         <p class="h3 mb-2 flex">Target Amount: <input type="text" bind:value={target} class="input w-20 rounded-lg mx-2 border-dashed border-2"> ml</p>
         <p class="h3 mb-2">Amount to Target: {target - total > 0 ? target - total : 0} ml</p>
         <p class="h3 mb-4">Total Amount Drank: {total} ml</p>
-        <p class="h3 mb-4">Streak: {inputs.length > 0 ? streakMap.get(dayOfYear(inputs[inputs.length - 1].timestamp)) : 0} day(s)</p>
+        <p class="h3 mb-4">Streak: {streakMap.has(dayOfYear(dummyDate)) ? streakMap.get(dayOfYear(inputs[inputs.length - 1].timestamp)) : 0} day(s)</p>
     </div>
     <button class="text-xl btn variant-ghost-primary mb-10" on:click={() => total = 0}>Reset</button>
 
