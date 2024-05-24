@@ -8,6 +8,13 @@
 
 
     let inputs: WaterInput[] = []
+    const dummyDate = new Date()
+    dummyDate.setDate(dummyDate.getDate() - 1)
+    const dummyInput: WaterInput = {
+        amount: 500,
+        timestamp: dummyDate
+    }
+    inputs = [dummyInput]
 
     async function handleSubmit() {
         const waterAmount = Number(waterToAdd)
