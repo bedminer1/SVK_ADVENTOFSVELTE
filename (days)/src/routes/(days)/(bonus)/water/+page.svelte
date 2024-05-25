@@ -2,12 +2,15 @@
     import { Paginator, ProgressBar } from '@skeletonlabs/skeleton'
     import type { PaginationSettings } from '@skeletonlabs/skeleton'
 
-    let total = 0
+    let currAmount = 0
     let waterToAdd: string
-    let target = 2000
+    let target = 6000
 
 
     let inputs: WaterInput[] = []
+    let amountMap = new Map<number, number>()
+
+    // <DUMMY DATA
     const dummyDate = new Date()
     const dummyDate2 = new Date()
     dummyDate.setDate(dummyDate.getDate() - 1)
@@ -21,8 +24,9 @@
         timestamp: dummyDate2
     }
     inputs = [dummyInput2, dummyInput]
+    // DUMMY DATE>
 
-    async function handleSubmit() {
+    function handleSubmit() {
         const waterAmount = Number(waterToAdd)
         if (isNaN(waterAmount)) {
             waterToAdd = ""
@@ -35,8 +39,17 @@
         }
 
         inputs = [...inputs, newInput]
-        total += waterAmount
         waterToAdd = ""
+    }
+
+    function handleReset() {
+        const currDay = dayOfYear(new Date())
+        for (let i = inputs.length - 1; i >= 0; i--) {
+            let input = inputs[i]
+            if (dayOfYear(input.timestamp) === currDay) {
+                inputs = inputs.slice(0, i)
+            }
+        }
     }
 
     // <PAGINATION
@@ -60,7 +73,9 @@
     const dayOfYear = (date: Date)=>
     //@ts-ignore
         Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24))
-    $: for (const input of inputs) {
+    $: {
+        amountMap = new Map()
+        for (const input of inputs) {
         // parse timestamp into day index
         const day = dayOfYear(input.timestamp)
         if (!streakMap.has(day - 1)) {
@@ -68,14 +83,12 @@
         } else {
             streakMap.set(day, streakMap.get(day - 1)! + 1)
         }
-    }
 
-    // TODO
-    /*
-     - adjustable target
-     - streaks
-    */
+        amountMap.set(day, (amountMap.get(day) ?? 0) + input.amount)
+        currAmount = amountMap.get(dayOfYear(new Date)) ?? 0
+    }}
 </script>
+
 
 <div class="flex flex-col h-[90vh] items-center">
     <form on:submit={handleSubmit}>
@@ -85,21 +98,21 @@
     </form>
 
     <ProgressBar 
-        value={total < target ? total : target} 
+        value={currAmount < target ? currAmount : target} 
         max={target} 
-        height={"h-5"}
-        meter={total > target ? 'bg-[#DCC7EA]' : 'bg-white'}
+        meter={currAmount > target ? 'bg-[#DCC7EA]' : 'bg-white'}
+        height={"min-h-5"}
         class="mb-5"
     />
 
     <div class="w-full border-dashed border-2 rounded-lg flex flex-col p-3 mb-5">
         
         <p class="h3 mb-2 flex">Target Amount: <input type="text" bind:value={target} class="input w-20 rounded-lg mx-2 border-dashed border-2"> ml</p>
-        <p class="h3 mb-2">Amount to Target: {target - total > 0 ? target - total : 0} ml</p>
-        <p class="h3 mb-4">Total Amount Drank: {total} ml</p>
+        <p class="h3 mb-2">Amount to Target: {target - currAmount > 0 ? target - currAmount : 0} ml</p>
+        <p class="h3 mb-4">Total Amount Drank: {currAmount} ml</p>
         <p class="h3 mb-4">Streak: {streakMap.has(dayOfYear(dummyDate)) ? streakMap.get(dayOfYear(inputs[inputs.length - 1].timestamp)) : 0} day(s)</p>
     </div>
-    <button class="text-xl btn variant-ghost-primary mb-10" on:click={() => total = 0}>Reset</button>
+    <button class="text-xl btn variant-ghost-primary mb-10" on:click={handleReset}>Reset</button>
 
     {#if inputs.length} 
     <table class="table mb-3 text-center">
