@@ -70,9 +70,13 @@
 
     let streakMap = new Map<number, number>()
 
+    // convert Date type to int representing day of the year
     const dayOfYear = (date: Date)=>
     //@ts-ignore
         Math.floor((date - new Date(date.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24))
+    
+    // effect keeping track of changes in inputs and updating 
+    // the amountMap and streakMap - recalculate from scratch for now, todo caching
     $: {
         amountMap = new Map()
         for (const input of inputs) {
