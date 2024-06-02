@@ -12,3 +12,5 @@ On top of base challenges, added random challenges I received from friends in th
 - Chartjs: when you need charts
 - SkeletonUI: nice out-of-the-box styles and features like paginators
 - superforms + zod: makes working with forms featureful and simple
+
+TODO: add links to learning resources and inspirations
